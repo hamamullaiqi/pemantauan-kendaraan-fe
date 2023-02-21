@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    box-sizing: border-box;
+    font-family: 'Helvatica', sans-serif;
+}
+.ant-menu-item{
+    display: flex !important;
+    justify-items: center !important;
+}
+
+p{
+    margin-bottom: 0;
+}
+
+.ant-modal.modal-sider  {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+
+}
+
+.ant-modal.modal-sider .ant-modal-content{
+    padding: 0;
+    width: fit-content !important;
+
+}
+
+.ant-modal.modal-sider .ant-modal-content .ant-modal-body{
+    width: fit-content !important;
+}
+
+
+
