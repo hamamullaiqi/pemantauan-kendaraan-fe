@@ -1,6 +1,6 @@
 import { blue, grey } from "@ant-design/colors";
 import { ReloadOutlined } from "@ant-design/icons";
-import { Button, Divider, Form, Image, Input, Typography } from "antd";
+import { Button, Divider, Form, theme as themeBase, Input, Typography } from "antd";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -19,7 +19,7 @@ const useStyle = createUseStyles({
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    backgroundColor: ({ colorPrimary }) => colorPrimary,
+    backgroundColor: ({ currentColorPrimary }) => currentColorPrimary,
   },
   wrapLogin: {
     backgroundColor: "white",
@@ -29,11 +29,18 @@ const useStyle = createUseStyles({
   },
 });
 
-export default function Login({ apps }) {
+export default function Login({ apps, theme }) {
   const dispatch = useDispatch();
   const [image, setImage] = useState("");
-  const { colorPrimary } = useTheme();
-  const classes = useStyle({ colorPrimary });
+  const {
+    token: { colorPrimary:BaseColorPrimary },
+  } = themeBase.useToken();
+  const { colorPrimary } = theme 
+
+
+  const currentColorPrimary = !!colorPrimary ? BaseColorPrimary : colorPrimary 
+  const classes = useStyle({ currentColorPrimary });
+  
   // const createRandomStr = () => {
   //     const timestamps = (new Date()).getTime();
   //     return timestamps + '_' + CreateRandomString(16);
@@ -58,7 +65,7 @@ export default function Login({ apps }) {
     <div className={classes.root}>
       <div className={classes.wrapLogin}>
         <div>
-          <Typography.Title style={{ color: colorPrimary }} level={2}>
+          <Typography.Title style={{ color: currentColorPrimary }} level={2}>
             Login
           </Typography.Title>
           <Typography.Text className="text-sub-title">

@@ -29,7 +29,7 @@ const UserPage = ({ userdata, theme }) => {
         path="login"
         element={
           (!!userdata && <Navigate to={"home"} />) || (
-            <LoginPage apps={"Dashboard"} theme={theme} />
+            <LoginPage apps={"Apps"} theme={theme} />
           )
         }
       />
@@ -47,7 +47,7 @@ const UserPage = ({ userdata, theme }) => {
 };
 
 export default () => {
-  const theme = useLocalTheme({appName:'dashboard'});
+  const theme = useLocalTheme({appName:'apps'});
   const { userdata, initComplete } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
