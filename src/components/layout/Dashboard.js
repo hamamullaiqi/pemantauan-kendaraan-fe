@@ -58,7 +58,7 @@ const useStyle = createUseStyles({
   },
 });
 
-export default function Dashboard() {
+export default function Dashboard({children, menus}) {
   const [collapsed, setCollapsed] = useState(true);
   const [open, handleOpen, handleClose] = useMyModal(false);
   const isMobile = useViewSize();
@@ -73,7 +73,6 @@ export default function Dashboard() {
     colorPrimary,
     headerColor,
     selectedMenuBg,
-    algorithm,
     isDark,
     toggleDarkMode,
   } = useTheme();
@@ -89,15 +88,7 @@ export default function Dashboard() {
   });
 
   return (
-    <ConfigProvider
-      theme={{
-        algorithm,
-        token: {
-          colorPrimary,
-          borderRadius: 4,
-        },
-      }}
-    >
+   
       <Layout className={classes.layout} style={{ height: "100vh" }}>
         {!!open && !!isMobile && (
           <MySider
@@ -106,6 +97,7 @@ export default function Dashboard() {
             siderBg={siderBg}
             colorPrimary={colorPrimary}
             handleClose={handleClose}
+            menus={menus || []}
           />
         )}
         {!isMobile && (
@@ -114,6 +106,8 @@ export default function Dashboard() {
             siderBg={siderBg}
             collapsed={collapsed}
             colorPrimary={colorPrimary}
+            menus={menus || []}
+
           />
         )}
 
@@ -174,7 +168,7 @@ export default function Dashboard() {
             </div>
           </Header>
           <Content>
-            <div className={classes.content}>content</div>
+            <div className={classes.content}>{children}</div>
           </Content>
           <Footer
             style={{
@@ -185,6 +179,5 @@ export default function Dashboard() {
           </Footer>
         </Layout>
       </Layout>
-    </ConfigProvider>
   );
 }
