@@ -35,10 +35,9 @@ export default function Login({ apps, theme }) {
   const {
     token: { colorPrimary:BaseColorPrimary },
   } = themeBase.useToken();
-  const { colorPrimary } = theme 
+  const { colorPrimary } = theme || {colorPrimary:''}
 
-
-  const currentColorPrimary = !!colorPrimary ? BaseColorPrimary : colorPrimary 
+  const currentColorPrimary = !!colorPrimary ? colorPrimary :  BaseColorPrimary
   const classes = useStyle({ currentColorPrimary });
   
   // const createRandomStr = () => {

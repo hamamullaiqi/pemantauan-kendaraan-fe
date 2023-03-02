@@ -2,63 +2,27 @@ import { HiHome } from "react-icons/hi";
 import { FaBoxOpen } from "react-icons/fa";
 import { RiPagesFill } from "react-icons/ri";
 import { MdPanTool } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { getLanguage} from "../../../languages/utils";
 
 const SIZE = 18;
 
-export const Menus = [
+export default (languages) => [
   {
-    key: "Apps",
+    key: "/dashboard",
     icon: <HiHome size={SIZE} />,
+    level: 0x1fff,
     children: [
       {
-        key: "Dashboard",
+        key: "/dashboard/home",
         icon: <HiHome size={SIZE} />,
+        level: 0x1fff,
         children: null,
-        label: "Dashboard",
+        label: <Link to={"/dashboard/home"}>{getLanguage("Dashboard", languages)}</Link>,
       },
     ],
-    label: "Apps",
+    label: "Dashboard",
     type: "group",
   },
-  {
-    key: "Components",
-    icon: <FaBoxOpen size={SIZE} />,
-    type: "group",
-    children: [
-      {
-        key: "Pages",
-        icon: <RiPagesFill size={SIZE} />,
-        children: [
-          {
-            key: "Table",
-            label: "Table",
-          },
-          {
-            key: "404Pages",
-            label: "404 page",
-          },
-          {
-            key: "NoResut",
-            label: "No Result Page",
-          },
-          {
-            key: "login",
-            label: "Login",
-          },
-          {
-            key: "register",
-            label: "Register",
-          },
-        ],
-        label: "Pages",
-      },
-      {
-        key: "Utils",
-        icon: <MdPanTool size={SIZE} />,
-        children: null,
-        label: "Utils",
-      },
-    ],
-    label: "Components",
-  },
+  
 ];

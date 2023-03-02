@@ -37,9 +37,9 @@ export const GetData = async (url, token, apps, onTokenInvalid) => {
         baseURL:BaseUrl, 
         responseType:'json',
         headers:{
-            srawungtoken:token,
-            srawungapps:apps,
-            srawungapp:apps,
+            srawungToken:token,
+            srawungApps:apps,
+            srawungApp:apps,
             'Content-Type':'application/json'
         }
     })
