@@ -5,8 +5,9 @@
     font-family: 'Helvatica', sans-serif;
 }
 .ant-menu-item{
-    display: flex !important;
-    justify-items: center !important;
+    /* display: flex !important;
+    justify-items: center !important; */
+    padding-left: 24px !important;
 }
 
 p{
@@ -34,6 +35,22 @@ p{
 .text-sub-title{
     color: rgb(157, 157, 157) !important; 
 }
+
+.custom-scrollbar {
+    height: 150px;
+    overflow-y: scroll;
+    scrollbar-width: thin; /* Hide default scrollbar */
+    scrollbar-color: #2f4f4f #fff; /* Change scrollbar color */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #fff; /* Change track color */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #2f4f4f; /* Change thumb color */
+    border-radius: 10px; /* Add rounded corners to thumb */
+  }
 
 
 

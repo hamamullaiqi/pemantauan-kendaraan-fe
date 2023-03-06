@@ -21,25 +21,26 @@ const UserPage = ({ userdata, theme }) => {
       <Route
         path=""
         element={
-          (!!userdata && <Navigate to={"home"} />) || <Navigate to="login" />
+          !!userdata ? <Navigate replace to="home"  /> : <Navigate replace to="login" />
         }
       />
       <Route
         exact
         path="login"
         element={
-          (!!userdata && <Navigate to={"home"} />) || (
-            <LoginPage apps={"Apps"} theme={theme} />
-          )
+          !!userdata ? <Navigate replace  to="../home"  /> : 
+            <LoginPage apps="Dashboard" theme={theme} />
+          
         }
       />
+      
 
       <Route
         path="*"
         element={
-          (!!userdata && <DashboardPages idx={new Date().getTime()} />) || (
-            <Navigate to="login" />
-          )
+          !!userdata ? <DashboardPages theme={theme} idx={new Date().getTime()} /> : 
+            <Navigate  replace to="../login" />
+          
         }
       />
     </Routes>
@@ -62,7 +63,7 @@ export default () => {
         algorithm: theme.algorithm,
         token: {
           colorPrimary: theme.colorPrimary,
-          borderRadius: 4,
+          borderRadius: 18,
         },
       }}
     >

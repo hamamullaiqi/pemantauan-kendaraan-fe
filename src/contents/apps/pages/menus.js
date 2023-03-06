@@ -2,63 +2,42 @@ import { HiHome } from "react-icons/hi";
 import { FaBoxOpen } from "react-icons/fa";
 import { RiPagesFill } from "react-icons/ri";
 import { MdPanTool } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { getLanguage} from "../../../languages/utils";
 
 const SIZE = 18;
 
-export const Menus = [
+export default (languages) => [
   {
-    key: "Apps",
+    key: "/apps",
     icon: <HiHome size={SIZE} />,
+    level: 0x1fff,
     children: [
       {
-        key: "Dashboard",
+        key: "/apps/home",
         icon: <HiHome size={SIZE} />,
-        children: null,
-        label: "Dashboard",
+        level: 0x1fff,
+        children: [
+          {
+            key: "/apps/home",
+            icon: <HiHome size={SIZE} />,
+            level: 0x1fff,
+            // children: [],
+            label: <Link to={"/apps/home"}>{getLanguage("Apps", languages)}</Link>,
+          },
+          {
+            key: "/apps/dash",
+            icon: <HiHome size={SIZE} />,
+            level: 0x1fff,
+            // children: [],
+            label: <Link to={"/apps/dash"}>{getLanguage("dash", languages)}</Link>,
+          },
+        ],
+        label: <Link to={"/apps/home"}>{getLanguage("Apps", languages)}</Link>,
       },
     ],
     label: "Apps",
     type: "group",
   },
-  {
-    key: "Components",
-    icon: <FaBoxOpen size={SIZE} />,
-    type: "group",
-    children: [
-      {
-        key: "Pages",
-        icon: <RiPagesFill size={SIZE} />,
-        children: [
-          {
-            key: "Table",
-            label: "Table",
-          },
-          {
-            key: "404Pages",
-            label: "404 page",
-          },
-          {
-            key: "NoResut",
-            label: "No Result Page",
-          },
-          {
-            key: "login",
-            label: "Login",
-          },
-          {
-            key: "register",
-            label: "Register",
-          },
-        ],
-        label: "Pages",
-      },
-      {
-        key: "Utils",
-        icon: <MdPanTool size={SIZE} />,
-        children: null,
-        label: "Utils",
-      },
-    ],
-    label: "Components",
-  },
+  
 ];

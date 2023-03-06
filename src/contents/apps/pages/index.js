@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { green } from "@ant-design/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { Routing } from "./routing";
 import { Route, Routes } from "react-router-dom";
 
-import { Menus } from "./menus";
+import  Menus  from "./menus";
 import { loadAirlines, loadAirports } from "../../../redux";
 import { useLocHref } from "../../../hook/useLocHref";
 import { useMenu } from "../../../hook/useMenu";
@@ -18,43 +18,44 @@ const TheRouter = () => {
     userdata: { level },
   } = useSelector((state) => state.auth);
   const routes = Routing.filter((r) => (r.level & level) > 0);
+  console.log(routes);
 
   return (
     <Routes>
       {routes.map((route, idx) => (
         <Route
           key={idx}
+          replace
           path={route.to}
-          exact={route.isExact !== false}
-          element={(props) => {
-            return !!route.component && route.component;
-          }}
+          // exact={route.isExact !== false}
+          element={!!route.component && route.component}
         />
       ))}
-      <Route path={"/*"}>
-        <div>Page Not Found</div>
-      </Route>
+      <Route path={"/*"} element={<div>Page Not Found</div>}/>
+
     </Routes>
   );
 };
 
-export default ({ idx }) => {
+export default ({theme, idx }) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadAirlines());
-    dispatch(loadAirports());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(loadAirlines());
+  //   dispatch(loadAirports());
+  // }, []);
   const {
     userdata: { level },
   } = useSelector((state) => state.auth);
   const key = useLocHref("dashboard");
   const { keys, menus } = useMenu(Menus, level);
   useNavs(keys, key);
+  console.log(menus);
 
   return (
-    
-      <Dashboard menus={menus}>
+    <Fragment>
+      <Dashboard menus={menus} themes={theme}>
         <TheRouter />
       </Dashboard>
+    </Fragment>
   );
 };

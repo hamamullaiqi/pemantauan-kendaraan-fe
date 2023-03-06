@@ -6,6 +6,18 @@ export const useLocalTheme = ({appName}) => {
   const { defaultAlgorithm, darkAlgorithm } = theme;
   const [isDark, setIsDark] = useState(false);
 
+  function setColorBasedOnBackground(bgColor) {
+    let color = "rgba(0,0,0,0.6)"; // default to black
+    const r = parseInt(bgColor.substr(1, 2), 16);
+    const g = parseInt(bgColor.substr(3, 2), 16);
+    const b = parseInt(bgColor.substr(5, 2), 16);
+    const brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    if (brightness < 128) {
+      color = "#FFFFFF"; // set to white for dark backgrounds
+    } 
+    return color;
+  }
+
   const algorithm = useMemo(() => {
     return isDark ? darkAlgorithm : defaultAlgorithm;
   }, [isDark]);
@@ -16,12 +28,13 @@ export const useLocalTheme = ({appName}) => {
       ? localStorage.setItem(`${appName}theme`, "dark")
       : localStorage.setItem(`${appName}theme`, "light");
   };
-  const menuColor = !!isDark ? "white" : "white";
-  const headerColor = !!isDark ? "white" : "white";
-  const headerBackground = !!isDark ? "#080808" : "white";
-  const colorPrimary = "#3A98B9";
-  const selectedMenuBg = !!isDark ? colorPrimary : "rgba(0, 0, 0, 0.3)";
-  const siderBg = !!isDark ? "#111" : colorPrimary;
+  const headerColor = !!isDark ? "#FFFFFF" : "#FFFFFF";
+  const headerBackground = !!isDark ? "#000" : "#FFFFFF";
+  const colorPrimary = "#f8e71c";
+  const selectedMenuBg = !!isDark ? colorPrimary : colorPrimary;
+  // const menuColor = !!isDark ? "#FFFFFF" : setColorBasedOnBackground(selectedMenuBg);
+  const menuColor = setColorBasedOnBackground(selectedMenuBg);
+  const siderBg = !!isDark ? "#111" : "linear-gradient(187.01deg, #E76A42 3.17%, #A842E7 63.18%)";
 
   useEffect(() => {
     const currentTheme = localStorage.getItem(`${appName}theme`);

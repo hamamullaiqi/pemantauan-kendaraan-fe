@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 
+import 'simplebar-react/dist/simplebar.min.css';
+
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "antd/dist/reset.css";

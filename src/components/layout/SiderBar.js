@@ -1,9 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Avatar, Layout, Menu } from "antd";
 import { SafetyCertificateFilled } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenKeys, setSelectedMenu } from "../../redux";
 import Scrollbars from "react-custom-scrollbars";
+import SimpleBar from "simplebar-react";
 const { Sider } = Layout;
 
 export default function SiderBar({
@@ -12,14 +13,23 @@ export default function SiderBar({
   siderBg,
   colorPrimary,
   menus,
+  isDark,
   ...props
 }) {
+  const ref = useRef()
+  const [heightSideTop, setHeightSideTop] = useState(0) 
   const { selectedMenu, openKeys } = useSelector((state) => state.nav);
   const { userdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  console.log(heightSideTop);
+  
   const rootSubmenuKeys = useMemo(() => {
-    return menus.map(({ key }) => key);
+    return menus?.map(({ key }) => key);
   }, [menus]);
+
+  useEffect(()=>{
+setHeightSideTop(ref.current.clientHeight)
+  },[])
   return (
     <Sider
       {...props}
@@ -36,16 +46,26 @@ export default function SiderBar({
         console.log(collapsed, type);
       }}
       width={260}
-      style={{ backgroundColor: siderBg, height: "100vh" }}
+      // style={{}}
+      style={{ background: siderBg, height: "100vh" }}
     >
-      <div className={classes.logo}>
-        <Avatar
-          icon={<SafetyCertificateFilled style={{ color: colorPrimary }} />}
-          style={{ backgroundColor: "white" }}
-        />
-        <p>WHITESPACE</p>
+      <div ref={ref}>
+        <div className={classes.logo}>
+          <Avatar
+            icon={<SafetyCertificateFilled style={{ color: colorPrimary }} />}
+            style={{ backgroundColor: "white" }}
+          />
+          <p>WHITESPACE</p>
+        </div> 
       </div>
-      <Scrollbars>
+
+      {/* <Scrollbars > */}
+      <SimpleBar
+        style={{ maxHeight: `calc(100vh - ${heightSideTop}px)` }}
+        forceVisible="y"
+        autoHide={true}
+
+      >
         <Menu
           theme="dark"
           mode="inline"
@@ -67,7 +87,8 @@ export default function SiderBar({
             }
           }}
         />
-      </Scrollbars>
+      </SimpleBar>
+      {/* </Scrollbars> */}
     </Sider>
   );
 }
