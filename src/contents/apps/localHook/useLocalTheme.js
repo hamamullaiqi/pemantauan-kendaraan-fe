@@ -29,10 +29,11 @@ export const useLocalTheme = ({appName}) => {
       : localStorage.setItem(`${appName}theme`, "light");
   };
   const headerColor = !!isDark ? "#FFFFFF" : "#FFFFFF";
-  const headerBackground = !!isDark ? "#000" : "#FFFFFF";
   const colorPrimary = "#f8e71c";
-  const selectedMenuBg = !!isDark ? colorPrimary : colorPrimary;
   // const menuColor = !!isDark ? "#FFFFFF" : setColorBasedOnBackground(selectedMenuBg);
+  const headerBackground = !!isDark ? "#0F0F0F" : "#FFFFFF";
+  const contentBackground = !!isDark && "#0F0F0F"
+  const selectedMenuBg = !!isDark ? colorPrimary : colorPrimary;
   const menuColor = setColorBasedOnBackground(selectedMenuBg);
   const siderBg = !!isDark ? "#111" : "linear-gradient(187.01deg, #E76A42 3.17%, #A842E7 63.18%)";
 
@@ -46,6 +47,7 @@ export const useLocalTheme = ({appName}) => {
   return {
     menuColor,
     headerBackground,
+    contentBackground,
     headerColor,
     colorPrimary,
     siderBg,

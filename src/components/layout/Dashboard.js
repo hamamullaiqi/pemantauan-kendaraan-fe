@@ -17,6 +17,7 @@ const { Header, Content, Footer } = Layout;
 const useStyle = createUseStyles({
   content: {
     padding: 24,
+    background: ({contentBackground}) => contentBackground
   },
   header: {
     display: "flex",
@@ -65,6 +66,7 @@ const useStyle = createUseStyles({
     color: "#FFF",
     fontWeight: "bold",
     fontSize: 18,
+    borderBottom: ({ isDark }) => isDark ? "1px solid #333":"1px solid #f1f1f1",
   },
 });
 
@@ -80,6 +82,7 @@ export default function Dashboard({ children, menus, themes }) {
     siderBg,
     menuColor,
     headerBackground,
+    contentBackground,
     colorPrimary,
     headerColor,
     selectedMenuBg,
@@ -94,6 +97,7 @@ export default function Dashboard({ children, menus, themes }) {
     menuColor,
     siderBg,
     selectedMenuBg,
+    contentBackground,
     colorBgContainer,
     headerColor,
     headerBackground,
@@ -153,22 +157,13 @@ export default function Dashboard({ children, menus, themes }) {
             className="header-right"
             style={{ display: "flex", alignItems: "center", gap: 8 }}
           >
-            <Switch
-              checked={isDark}
-              onChange={(value) => toggleDarkMode(value)}
-              unCheckedChildren={
-                <HiOutlineSun
-                  size={21}
-                  style={{ display: "flex", alignItems: "center" }}
-                />
-              }
-              checkedChildren={
-                <HiMoon
+            <Button onClick={()=>toggleDarkMode(!isDark)} icon={!!isDark? <HiMoon
                   size={20}
-                  style={{ display: "flex", alignItems: "center" }}
-                />
-              }
-            />
+                color={"#f8e71c"}
+                /> : <HiOutlineSun
+                size={21}
+                color={grey[4]} 
+              />} />
             <Avatar
               size="large"
               icon={<UserOutlined />}
@@ -177,13 +172,13 @@ export default function Dashboard({ children, menus, themes }) {
           </div>
         </Header>
         {/* <Scrollbars> */}
-        <Content >
+        <Content className={classes.content}>
           <SimpleBar
             style={{ maxHeight: `calc(100vh - 70px)` }}
             // forceVisible="y"
             autoHide={false}
           >
-            <div className={classes.content}>{children}</div>
+            <div >{children}</div>
           </SimpleBar>
         </Content>
 
