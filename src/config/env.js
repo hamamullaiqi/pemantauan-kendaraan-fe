@@ -6,7 +6,7 @@
 // const ImageUrl='http://10.8.0.100/images/';
 const BaseUrl = 'http://localhost:11611/';
 const ImageUrl = 'http://localhost:11611/';
-const Title = 'Direktorat Jenderal Imigrasi';
+const Title = 'Template Antd';
 const BgColor = '#a11645';
 const withDomestic = true;
 const defaultOriginDom = { _id: '60a3d868045fd93f38efc29a', code: "CGK", kota: 'Jakarta' };

@@ -9,12 +9,8 @@ const SIZE = 18;
 
 export default (languages) => [
   {
-    key: "/apps",
-    icon: <HiHome size={SIZE} />,
-    level: 0x1fff,
-    children: [
-      {
-        key: "/apps/home",
+    
+        key: "/apps/",
         icon: <HiHome size={SIZE} />,
         level: 0x1fff,
         children: [
@@ -26,18 +22,14 @@ export default (languages) => [
             label: <Link to={"/apps/home"}>{getLanguage("Apps", languages)}</Link>,
           },
           {
-            key: "/apps/dash",
+            key: "/apps/chart",
             icon: <HiHome size={SIZE} />,
             level: 0x1fff,
             // children: [],
-            label: <Link to={"/apps/dash"}>{getLanguage("dash", languages)}</Link>,
+            label: <Link to={"/apps/chart"}>{getLanguage("dash", languages)}</Link>,
           },
         ],
         label: <Link to={"/apps/home"}>{getLanguage("Apps", languages)}</Link>,
       },
-    ],
-    label: "Apps",
-    type: "group",
-  },
   
 ];

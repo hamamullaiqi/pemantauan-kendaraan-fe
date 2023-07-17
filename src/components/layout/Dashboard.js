@@ -38,14 +38,15 @@ const useStyle = createUseStyles({
     color: "#dadada",
     padding:8,
     "&.ant-menu-dark .ant-menu-item-group-title":{
-      color:({ selectedMenuBg }) => selectedMenuBg
+      // color:({ selectedMenuBg }) => selectedMenuBg
+      fontWeight: "bold"
     },
     "&.ant-menu-dark.ant-menu-inline .ant-menu-sub.ant-menu-inline": {
       background: "none",
       marginLeft: 8,
     },
     "&.ant-menu-dark  .ant-menu-item-selected": {
-      background: ({ selectedMenuBg }) => selectedMenuBg,
+      // background: ({ selectedMenuBg }) => selectedMenuBg,
       fontWeight: "bold",
       color: ({ menuColor }) => menuColor,
       paddingLeft: 2,
@@ -66,7 +67,7 @@ const useStyle = createUseStyles({
     color: "#FFF",
     fontWeight: "bold",
     fontSize: 18,
-    borderBottom: ({ isDark }) => isDark ? "1px solid #333":"1px solid #f1f1f1",
+    borderBottom: ({ isDark }) => isDark ? "1px solid #333":"2px solid #898989",
   },
 });
 

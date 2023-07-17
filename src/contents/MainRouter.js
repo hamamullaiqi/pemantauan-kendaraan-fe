@@ -10,6 +10,7 @@ export default function MainRouter() {
         </Route>
         <Route path="/landing" element={<span>landing</span>} />
         <Route path="/apps/*" element={<AppsPage />} />
+        <Route path="/*" element={<div>Not Found</div>} />
       </Routes>
     </Router>
   );

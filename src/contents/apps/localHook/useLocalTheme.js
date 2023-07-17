@@ -28,14 +28,14 @@ export const useLocalTheme = ({appName}) => {
       ? localStorage.setItem(`${appName}theme`, "dark")
       : localStorage.setItem(`${appName}theme`, "light");
   };
+  const colorPrimary = "#4A9B00";
   const headerColor = !!isDark ? "#FFFFFF" : "#FFFFFF";
-  const colorPrimary = "#f8e71c";
   // const menuColor = !!isDark ? "#FFFFFF" : setColorBasedOnBackground(selectedMenuBg);
   const headerBackground = !!isDark ? "#0F0F0F" : "#FFFFFF";
   const contentBackground = !!isDark && "#0F0F0F"
   const selectedMenuBg = !!isDark ? colorPrimary : colorPrimary;
   const menuColor = setColorBasedOnBackground(selectedMenuBg);
-  const siderBg = !!isDark ? "#111" : "linear-gradient(187.01deg, #E76A42 3.17%, #A842E7 63.18%)";
+  const siderBg = !!isDark ? "#111" : "#014F97";
 
   useEffect(() => {
     const currentTheme = localStorage.getItem(`${appName}theme`);

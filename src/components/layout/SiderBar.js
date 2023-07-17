@@ -21,7 +21,6 @@ export default function SiderBar({
   const { selectedMenu, openKeys } = useSelector((state) => state.nav);
   const { userdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  console.log(heightSideTop);
   
   const rootSubmenuKeys = useMemo(() => {
     return menus?.map(({ key }) => key);
