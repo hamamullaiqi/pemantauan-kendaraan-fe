@@ -8,86 +8,107 @@ import SimpleBar from "simplebar-react";
 const { Sider } = Layout;
 
 export default function SiderBar({
-  collapsed,
-  classes,
-  siderBg,
-  colorPrimary,
-  menus,
-  isDark,
-  ...props
+    collapsed,
+    classes,
+    siderBg,
+    colorPrimary,
+    menus,
+    isDark,
+    ...props
 }) {
-  const ref = useRef()
-  const [heightSideTop, setHeightSideTop] = useState(0) 
-  const { selectedMenu, openKeys } = useSelector((state) => state.nav);
-  const { userdata } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  
-  const rootSubmenuKeys = useMemo(() => {
-    return menus?.map(({ key }) => key);
-  }, [menus]);
+    const ref = useRef();
+    const [heightSideTop, setHeightSideTop] = useState(0);
+    const { selectedMenu, openKeys } = useSelector((state) => state.nav);
+    const { userdata } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
-  useEffect(()=>{
-setHeightSideTop(ref.current.clientHeight)
-  },[])
-  return (
-    <Sider
-      {...props}
-      collapsed={collapsed}
-      collapsible
-      // collapsible
-      trigger={null}
-      breakpoint="xs"
-      collapsedWidth="0"
-      onBreakpoint={(broken) => {
-        console.log(broken);
-      }}
-      onCollapse={(collapsed, type) => {
-        console.log(collapsed, type);
-      }}
-      width={260}
-      // style={{}}
-      style={{ background: siderBg, height: "100vh" }}
-    >
-      <div ref={ref}>
-        <div className={classes.logo}>
-          <Avatar
-            icon={<SafetyCertificateFilled style={{ color: colorPrimary }} />}
-            style={{ backgroundColor: "white" }}
-          />
-          <p>WHITESPACE</p>
-        </div> 
-      </div>
+    const [current, setCurrent] = useState("");
 
-      {/* <Scrollbars > */}
-      <SimpleBar
-        style={{ maxHeight: `calc(100vh - ${heightSideTop}px)` }}
-        forceVisible="y"
-        autoHide={true}
+    const rootSubmenuKeys = useMemo(() => {
+        return menus?.map(({ key }) => key);
+    }, [menus]);
 
-      >
-        <Menu
-          theme="dark"
-          mode="inline"
-          className={classes.menu}
-          items={menus || []}
-          onClick={(e) => {
-            dispatch(setSelectedMenu(e.key));
-          }}
-          selectedKeys={[selectedMenu]}
-          openKeys={openKeys}
-          onOpenChange={(keys) => {
-            const latestOpenKey = keys.find(
-              (key) => openKeys.indexOf(key) === -1
+    useEffect(() => {
+        setHeightSideTop(ref.current.clientHeight);
+    }, []);
+
+    useEffect(() => {
+        if (Array.isArray(menus)) {
+            const defCurr = menus.find(
+                (item) => item.key === window.location.pathname
             );
-            if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-              dispatch(setOpenKeys(keys));
-            } else {
-              dispatch(setOpenKeys(latestOpenKey ? [latestOpenKey] : []));
-            }
-          }}
-        />
-      </SimpleBar>
-      {/* </Scrollbars> */}
-    </Sider>
-  );
+            setCurrent(defCurr);
+        }
+    }, [menus]);
+
+    console.log(current, menus);
+    return (
+        <Sider
+            {...props}
+            collapsed={collapsed}
+            collapsible
+            // collapsible
+            trigger={null}
+            breakpoint="xs"
+            collapsedWidth="0"
+            onBreakpoint={(broken) => {
+                console.log(broken);
+            }}
+            onCollapse={(collapsed, type) => {
+                console.log(collapsed, type);
+            }}
+            width={260}
+            // style={{}}
+            style={{ background: siderBg, height: "100vh" }}
+        >
+            <div ref={ref}>
+                <div className={classes.logo}>
+                    <Avatar
+                        icon={
+                            <SafetyCertificateFilled
+                                style={{ color: colorPrimary }}
+                            />
+                        }
+                        style={{ backgroundColor: "white" }}
+                    />
+                    <p>WHITESPACE</p>
+                </div>
+            </div>
+
+            {/* <Scrollbars > */}
+            <SimpleBar
+                style={{ maxHeight: `calc(100vh - ${heightSideTop}px)` }}
+                forceVisible="y"
+                autoHide={true}
+            >
+                <Menu
+                    theme="dark"
+                    mode="inline"
+                    className={classes.menu}
+                    items={menus || []}
+                    selectedKeys={[current.key]}
+                    onClick={(e) => {
+                        // dispatch(setSelectedMenu(e.key));
+                        setCurrent(e);
+                    }}
+                    openKeys={openKeys}
+                    onOpenChange={(keys) => {
+                        const latestOpenKey = keys.find(
+                            (key) => openKeys.indexOf(key) === -1
+                        );
+                        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+                            dispatch(setOpenKeys(keys));
+                        } else {
+                            dispatch(
+                                setOpenKeys(
+                                    latestOpenKey ? [latestOpenKey] : []
+                                )
+                            );
+                        }
+                    }}
+                />
+            </SimpleBar>
+            {/* </Scrollbars> */}
+        </Sider>
+    );
 }

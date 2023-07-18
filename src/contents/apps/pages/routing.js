@@ -1,15 +1,9 @@
-import Chart from "./chart.js";
 import Home from "./home";
 
 export const Routing = [
     {
-        to: '/home',
+        to: "/home",
         level: 0x1fff,
-        component: <Home/>
+        component: <Home />,
     },
-    {
-        to: '/chart',
-        level: 0x1fff,
-        component: <Chart/>
-    },
-]
+];
