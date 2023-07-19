@@ -56,7 +56,7 @@ export default function SiderBar({
             onCollapse={(collapsed, type) => {
                 console.log(collapsed, type);
             }}
-            width={"18%"}
+            width={"16%"}
             // style={{}}
             style={{
                 background: siderBg,
