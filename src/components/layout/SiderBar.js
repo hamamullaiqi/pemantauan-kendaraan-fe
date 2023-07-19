@@ -41,7 +41,6 @@ export default function SiderBar({
         }
     }, [menus]);
 
-    console.log(current, menus);
     return (
         <Sider
             {...props}
@@ -49,7 +48,7 @@ export default function SiderBar({
             collapsible
             // collapsible
             trigger={null}
-            breakpoint="xs"
+            breakpoint="lg"
             collapsedWidth="0"
             onBreakpoint={(broken) => {
                 console.log(broken);
@@ -57,9 +56,13 @@ export default function SiderBar({
             onCollapse={(collapsed, type) => {
                 console.log(collapsed, type);
             }}
-            width={260}
+            width={"18%"}
             // style={{}}
-            style={{ background: siderBg, height: "100vh" }}
+            style={{
+                background: siderBg,
+                height: "100vh",
+                borderRight: !!isDark && "1px solid #3d3d3d",
+            }}
         >
             <div ref={ref}>
                 <div className={classes.logo}>

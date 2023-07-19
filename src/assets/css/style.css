@@ -52,5 +52,25 @@ p{
     border-radius: 10px; /* Add rounded corners to thumb */
   }
 
+.ant-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+  }
+
+  .ant-btn span {
+    margin-left: 4px;
+  }
+
+  .main-card{
+    box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.36);
+        -webkit-box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.36);
+        -moz-box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.36);
+  }
+
+.table-in-page .ant-table-cell{
+    padding: 8px 16px !important;
+}
+
 
 

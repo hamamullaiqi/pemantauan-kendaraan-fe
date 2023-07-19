@@ -13,6 +13,7 @@ import LoginPage from "../auth/Login";
 import DashboardPages from "./pages";
 import { ConfigProvider } from "antd";
 import { useLocalTheme } from "./localHook/useLocalTheme";
+import { setTheme } from "../../redux/reducer/apps";
 
 const UserPage = ({ userdata, theme }) => {
     return (
@@ -63,6 +64,7 @@ export default () => {
     useEffect(() => {
         dispatch(setApps("head-office")); // set applikasi
         dispatch(initMe()); // cek token validasi
+        dispatch(setTheme(!!theme.isDark ? "dark" : "light"));
     }, [initMe, setApps]);
     if (!initComplete) return <p>Loading ...</p>;
 
@@ -72,7 +74,8 @@ export default () => {
                 algorithm: theme.algorithm,
                 token: {
                     colorPrimary: theme.colorPrimary,
-                    borderRadius: 18,
+                    borderRadius: 8,
+                    fontSize: 14,
                 },
             }}
         >
