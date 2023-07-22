@@ -25,14 +25,14 @@ export default function Produk() {
     return (
         <TableMaster
             title={"Produk"}
-            url={"produk/paging"}
+            url={"api/v1/produk/paging"}
             columns={columns}
-            editable={{ url: "produk/edit" }}
-            deletable={{ url: "produk/delete" }}
+            editable={{ url: "api/v1/produk/edit" }}
+            deletable={{ url: "api/v1/produk/delete" }}
             renderCreate={{
                 // contentType: "multipart/form-data",
                 state: state,
-                url: "produk/add",
+                url: "api/v1/produk/add",
                 // onSubmit: (row) => console.log(row),
                 form: (
                     <div>

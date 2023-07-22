@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setLoading, unsetLoading } from "./apps";
-import { GetData, PostData } from "../caller";
 import { logout } from "./auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,15 +7,16 @@ import Axios from "axios";
 
 const tokenStr = window.localStorage.getItem("token");
 export const API = Axios.create({
-    baseURL: process.env.REACT_APP_SERVICEAPI,
+    baseURL: `${process.env.REACT_APP_SERVICEAPI}`,
     headers: {
         Authorization: `Bearer ${tokenStr}` ?? localStorage.getItem("token"),
     },
 });
 
-const defConfig = {
+export const defConfig = {
     headers: {
         "Content-type": "application/json",
+        Authorization: `Bearer ${tokenStr}` ?? localStorage.getItem("token"),
     },
 };
 
@@ -118,9 +118,10 @@ export const GetAPI = createAsyncThunk("API/Get", async (payload, thunkApi) => {
     const { url, noLoading } = payload;
     if (!noLoading) dispatch(setLoading());
     let response = false;
-    console.log(defConfig);
+    console.log(url);
     try {
         response = await API.get(url, defConfig);
+        console.log(response);
     } catch (error) {
         toast.dismiss();
         toast.error(error.message);

@@ -4,6 +4,7 @@ import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
 import { levelToRole } from "./levelConvert";
 import CFG from "../../config/env";
+import Axios from "axios";
 
 const { Title } = CFG;
 const authSlice = createSlice({
@@ -33,6 +34,12 @@ const authSlice = createSlice({
 export const { successLogin, setApps, doLogout, initComplete } =
     authSlice.actions;
 
+const defConfig = {
+    headers: {
+        "Content-type": "application/json",
+    },
+};
+
 export const login = createAsyncThunk(
     "auth/login",
     async ({ user, password, app, ...rest }, thunkAPI) => {
@@ -41,22 +48,21 @@ export const login = createAsyncThunk(
             auth: { apps },
         } = getState();
         const tokenName = `token`;
-        const token = await dispatch(
-            PostAPI({
-                url: "login",
-                data: { username: user, password, app, ...rest },
-            })
+        const token = await Axios.post(
+            `${process.env.REACT_APP_SERVICEAPI}auth/login`,
+            { username: user, password, app, ...rest },
+            defConfig
         );
+
         console.log(token);
-        if (!!token.payload) {
-            console.log("masuk");
-            const userdata = jwtDecode(token.payload?.data?.token);
+        if (!!token?.data) {
+            const userdata = jwtDecode(token.data?.token);
             console.log(userdata);
-            window.localStorage.setItem("token", token.payload?.data?.token);
+            window.localStorage.setItem("token", token.data?.token);
             dispatch(
                 successLogin({
                     userdata: userdata.dataValues,
-                    token: token.payload?.data?.token,
+                    token: token?.data?.token,
                 })
             );
             toast.success(`Welcome to ${Title}, ${userdata?.name}`);
@@ -90,7 +96,9 @@ export const initMe = createAsyncThunk("auth/me", async (body, thunkAPI) => {
     if (!!token) {
         const userdata = jwtDecode(token);
         dispatch(successLogin({ userdata, token }));
-        dispatch(GetAPI({ url: "isMe" }));
+        dispatch(
+            GetAPI({ url: `${process.env.REACT_APP_SERVICEAPI}auth/isMe` })
+        );
         if (userdata)
             dispatch(successLogin({ userdata: userdata?.dataValues, token }));
     }
