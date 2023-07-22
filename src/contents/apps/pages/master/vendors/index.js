@@ -11,6 +11,12 @@ export default function Vendor() {
             render: (text) => text,
         },
         {
+            title: "Alamat",
+            dataIndex: "alamat",
+            key: "alamat",
+            render: (text) => text,
+        },
+        {
             title: "Keterangan",
             dataIndex: "keterangan",
             key: "keterangan",
@@ -21,6 +27,7 @@ export default function Vendor() {
     const [state, setState] = useState({
         nama: "",
         keterangan: "",
+        alamat: "",
     });
     return (
         <TableMaster
@@ -49,6 +56,18 @@ export default function Vendor() {
                             <Input />
                         </Form.Item>
 
+                        <Form.Item
+                            label="Alamat"
+                            name="alamat"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Alamat Tidak Boleh Kosong!",
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
                         <Form.Item
                             label="Keterangan"
                             name="keterangan"

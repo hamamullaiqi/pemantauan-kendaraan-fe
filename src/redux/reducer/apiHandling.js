@@ -13,11 +13,16 @@ export const API = Axios.create({
     },
 });
 
-export const defConfig = {
-    headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${tokenStr}` ?? localStorage.getItem("token"),
-    },
+export const defConfig = () => {
+    const tokenStr = window.localStorage.getItem("token");
+
+    return {
+        headers: {
+            "Content-type": "application/json",
+            Authorization:
+                `Bearer ${tokenStr}` ?? localStorage.getItem("token"),
+        },
+    };
 };
 
 const formConfig = (type) => {
@@ -43,7 +48,7 @@ export const PostAPI = createAsyncThunk(
         const { url, data, config } = payload;
         let toConfig =
             config === "application/json" || !config
-                ? defConfig
+                ? defConfig()
                 : formConfig(config);
         let response = false;
         try {
@@ -70,7 +75,7 @@ export const PatchAPI = createAsyncThunk(
         const { url, data, config } = payload;
         let toConfig =
             config === "application/json" || !config
-                ? defConfig
+                ? defConfig()
                 : formConfig(config);
         let response = false;
         try {
@@ -98,7 +103,7 @@ export const DestroyAPI = createAsyncThunk(
 
         let response = false;
         try {
-            const resp = await API.delete(url, defConfig);
+            const resp = await API.delete(url, defConfig());
             response = resp.data;
         } catch (error) {
             console.log({ error });
@@ -120,7 +125,7 @@ export const GetAPI = createAsyncThunk("API/Get", async (payload, thunkApi) => {
     let response = false;
     console.log(url);
     try {
-        response = await API.get(url, defConfig);
+        response = await API.get(url, defConfig());
         console.log(response);
     } catch (error) {
         toast.dismiss();
