@@ -20,7 +20,7 @@ export const Routing = [
         component: <Vendor />,
     },
     {
-        to: "/master/user",
+        to: "/master/users",
         level: 0x1fff,
         component: <User />,
     },

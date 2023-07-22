@@ -47,15 +47,15 @@ export default function User() {
     });
     return (
         <TableMaster
-            title={"Vendor"}
-            url={"api/v1/vendor/paging"}
+            title={"Users"}
+            url={"api/v1/user/paging"}
             columns={columns}
-            editable={{ url: "api/v1/vendor/edit" }}
-            deletable={{ url: "api/v1/vendor/delete" }}
+            editable={{ url: "api/v1/user/edit" }}
+            deletable={{ url: "api/v1/user/delete" }}
             renderCreate={{
                 // contentType: "multipart/form-data",
                 state: state,
-                url: "api/v1/vendor/add",
+                url: "api/v1/user/add",
                 // onSubmit: (row) => console.log(row),
                 form: (
                     <div>
