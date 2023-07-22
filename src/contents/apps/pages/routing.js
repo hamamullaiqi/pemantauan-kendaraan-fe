@@ -1,5 +1,6 @@
 import Home from "./home";
 import Produk from "./master/produks";
+import Vendor from "./master/vendors";
 
 export const Routing = [
     {
@@ -11,5 +12,10 @@ export const Routing = [
         to: "/master/produk",
         level: 0x1fff,
         component: <Produk />,
+    },
+    {
+        to: "/master/vendor",
+        level: 0x1fff,
+        component: <Vendor />,
     },
 ];
