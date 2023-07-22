@@ -19,7 +19,8 @@ import {
     Divider,
 } from "antd";
 import { useDispatch } from "react-redux";
-import { PostAPI } from "../../../redux";
+import { PatchAPI, PostAPI } from "../../../redux";
+import { DestroyAPI } from "../../../redux/reducer/apiHandling";
 
 const { Search } = Input;
 const PAGE = 1;
@@ -90,7 +91,14 @@ const CreateForm = ({
     );
 };
 
-export default function TableMaster({ url, columns, renderCreate, title }) {
+export default function TableMaster({
+    url,
+    columns,
+    renderCreate,
+    title,
+    editable,
+    deletable,
+}) {
     const dispatch = useDispatch();
     const [page, setPage] = useState(PAGE);
     const [perPage, setPerPage] = useState(PERPAGE);
@@ -99,6 +107,11 @@ export default function TableMaster({ url, columns, renderCreate, title }) {
     const [refresh, setRefresh] = useState(dayjs().unix());
 
     const [openCreate, setOpenCreate] = useState(false);
+    const [editData, setEditData] = useState(null);
+
+    const formatedEditData = useMemo(() => {
+        return !!editData ? editData : renderCreate?.state;
+    }, [renderCreate.state, editData]);
 
     const uri = useMemo(() => {
         return `${url}?page=${page}&perPage=${perPage}&search=${search}&filters=${
@@ -114,12 +127,73 @@ export default function TableMaster({ url, columns, renderCreate, title }) {
         setSearch(val);
     };
 
-    const handleCreate = (value, onSubmit, url, config) => {
+    const handleDelete = async (url, id) => {
+        if (!url) throw Error("invalid url delete");
+        if (!id) throw Error("invalid url key");
+        const resp = await dispatch(
+            DestroyAPI({
+                url: `${url}/${id}`,
+            })
+        );
+        if (resp?.payload?.status === "success") {
+            setRefresh(dayjs().unix());
+        }
+    };
+
+    const newColumns = useMemo(() => {
+        const action = [
+            {
+                title: "Action",
+                key: "action",
+                render: (_, record) => (
+                    <Space size="middle">
+                        {!!editable.url && (
+                            <Button
+                                onClick={() => {
+                                    setEditData(record);
+                                    setOpenCreate(!openCreate);
+                                }}
+                                type="default"
+                            >
+                                Edit
+                            </Button>
+                        )}
+                        {!!deletable && (
+                            <Button
+                                type="primary"
+                                onClick={() =>
+                                    handleDelete(deletable.url, record?.id)
+                                }
+                            >
+                                Delete
+                            </Button>
+                        )}
+                    </Space>
+                ),
+            },
+        ];
+        return !!editable || !!deletable ? [...columns, ...action] : columns;
+    }, [columns]);
+
+    const handleCreate = async ({ value, onSubmit, url, config, editUrl }) => {
         if (!url) throw Error("invalid url");
         let newValue = typeof onSubmit === "function" ? onSubmit(value) : value;
-        dispatch(PostAPI({ url: url, data: newValue, config: config }));
-        setOpenCreate(!openCreate);
-        setRefresh(dayjs().unix());
+        const resp =
+            !!editData && !!editUrl
+                ? await dispatch(
+                      PatchAPI({
+                          url: `${editUrl}/${formatedEditData?.id}`,
+                          data: newValue,
+                          config: config,
+                      })
+                  )
+                : await dispatch(
+                      PostAPI({ url: url, data: newValue, config: config })
+                  );
+        if (resp?.payload?.status === "success") {
+            setOpenCreate(!openCreate);
+            setRefresh(dayjs().unix());
+        }
     };
 
     return (
@@ -150,12 +224,13 @@ export default function TableMaster({ url, columns, renderCreate, title }) {
                         <Button
                             type="primary"
                             icon={<IoMdAdd size={14} />}
-                            onClick={() =>
+                            onClick={() => {
                                 !!renderCreate.onClick &&
                                 typeof renderCreate.onClick === "function"
                                     ? renderCreate.onClick()
-                                    : setOpenCreate(!openCreate)
-                            }
+                                    : setOpenCreate(!openCreate);
+                                setEditData(null);
+                            }}
                         >
                             Create
                         </Button>
@@ -199,7 +274,7 @@ export default function TableMaster({ url, columns, renderCreate, title }) {
                             minHeight: `calc(100vh - 300px)`,
                             marginTop: 16,
                         }}
-                        columns={columns}
+                        columns={newColumns}
                         dataSource={datas?.data?.rows}
                         scroll={{ y: `calc(100vh - 354px)` }}
                         pagination={false}
@@ -233,13 +308,14 @@ export default function TableMaster({ url, columns, renderCreate, title }) {
                     title={title}
                     form={renderCreate.form}
                     onFinish={(value) =>
-                        handleCreate(
-                            value,
-                            renderCreate.onSubmit,
-                            renderCreate.url
-                        )
+                        handleCreate({
+                            value: value,
+                            onSubmit: renderCreate.onSubmit,
+                            url: renderCreate.url,
+                            editUrl: editable.url,
+                        })
                     }
-                    state={renderCreate.state}
+                    state={formatedEditData}
                 />
             )}
         </div>

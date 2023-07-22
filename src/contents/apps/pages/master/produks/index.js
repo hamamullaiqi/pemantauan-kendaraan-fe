@@ -16,17 +16,6 @@ export default function Produk() {
             key: "keterangan",
             render: (text) => text,
         },
-
-        // {
-        //     title: "Action",
-        //     key: "action",
-        //     render: (_, record) => (
-        //         <Space size="middle">
-        //             <a>Invite {record.name}</a>
-        //             <a>Delete</a>
-        //         </Space>
-        //     ),
-        // },
     ];
 
     const [state, setState] = useState({
@@ -38,6 +27,8 @@ export default function Produk() {
             title={"Produk"}
             url={"produk/paging"}
             columns={columns}
+            editable={{ url: "produk/edit" }}
+            deletable={{ url: "produk/delete" }}
             renderCreate={{
                 // contentType: "multipart/form-data",
                 state: state,

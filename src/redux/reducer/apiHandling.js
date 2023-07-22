@@ -60,6 +60,57 @@ export const PostAPI = createAsyncThunk(
     }
 );
 
+export const PatchAPI = createAsyncThunk(
+    "API/Patch",
+    async (payload, thunkApi) => {
+        const { dispatch, getState } = thunkApi;
+        dispatch(setLoading());
+        const {
+            auth: { apps, token },
+        } = getState();
+        const { url, data, config } = payload;
+        let toConfig =
+            config === "application/json" || !config
+                ? defConfig
+                : formConfig(config);
+        let response = false;
+        try {
+            const resp = await API.patch(url, data, toConfig);
+            response = resp.data;
+        } catch (error) {
+            console.log({ error });
+            toast.dismiss();
+            toast.error(error.message);
+        }
+        dispatch(unsetLoading());
+        return response;
+    }
+);
+
+export const DestroyAPI = createAsyncThunk(
+    "API/Patch",
+    async (payload, thunkApi) => {
+        const { dispatch, getState } = thunkApi;
+        dispatch(setLoading());
+        const {
+            auth: { apps, token },
+        } = getState();
+        const { url } = payload;
+
+        let response = false;
+        try {
+            const resp = await API.delete(url);
+            response = resp.data;
+        } catch (error) {
+            console.log({ error });
+            toast.dismiss();
+            toast.error(error.message);
+        }
+        dispatch(unsetLoading());
+        return response;
+    }
+);
+
 export const GetAPI = createAsyncThunk("API/Get", async (payload, thunkApi) => {
     const { dispatch, getState } = thunkApi;
     const {
