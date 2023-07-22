@@ -123,6 +123,8 @@ export default function TableMaster({
         revalidateOnFocus: false,
     }) || { datas: [] };
 
+    console.log(datas, loading);
+
     const onSearch = (val) => {
         setSearch(val);
     };

@@ -6,12 +6,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Axios from "axios";
 
+const tokenStr = window.localStorage.getItem("token");
 export const API = Axios.create({
     baseURL: process.env.REACT_APP_SERVICEAPI,
     headers: {
-        Authorization:
-            `Bearer ${localStorage.getItem("token")}` ??
-            localStorage.getItem("token"),
+        Authorization: `Bearer ${tokenStr}` ?? localStorage.getItem("token"),
     },
 });
 
@@ -99,7 +98,7 @@ export const DestroyAPI = createAsyncThunk(
 
         let response = false;
         try {
-            const resp = await API.delete(url);
+            const resp = await API.delete(url, defConfig);
             response = resp.data;
         } catch (error) {
             console.log({ error });
@@ -119,9 +118,9 @@ export const GetAPI = createAsyncThunk("API/Get", async (payload, thunkApi) => {
     const { url, noLoading } = payload;
     if (!noLoading) dispatch(setLoading());
     let response = false;
+    console.log(defConfig);
     try {
-        response = await API.get(url);
-        console.log(response);
+        response = await API.get(url, defConfig);
     } catch (error) {
         toast.dismiss();
         toast.error(error.message);
