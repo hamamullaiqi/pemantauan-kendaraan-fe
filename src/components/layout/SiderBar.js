@@ -22,7 +22,8 @@ export default function SiderBar({
     const { userdata } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
-    const [current, setCurrent] = useState("");
+    const [current, setCurrent] = useState({});
+    const [currentOpenMenu, setCurrentOpenMenu] = useState({});
 
     const rootSubmenuKeys = useMemo(() => {
         return menus?.map(({ key }) => key);
@@ -33,13 +34,32 @@ export default function SiderBar({
     }, []);
 
     useEffect(() => {
+        let result = {};
+        let toOpen = {};
         if (Array.isArray(menus)) {
-            const defCurr = menus.find(
-                (item) => item.key === window.location.pathname
-            );
-            setCurrent(defCurr);
+            for (let iii = 0; iii < menus.length; iii++) {
+                const el = menus[iii];
+                if (!!el?.children && Array.isArray(el?.children)) {
+                    for (let iv = 0; iv < el.children.length; iv++) {
+                        const elChildren = el.children[iv];
+                        if (elChildren.key === window.location.pathname) {
+                            result = elChildren;
+                            toOpen = el;
+                        }
+                    }
+                } else {
+                    if (el.key === window.location.pathname) {
+                        result = el;
+                        toOpen = el;
+                    }
+                }
+            }
         }
-    }, [menus]);
+        setCurrent(result);
+        setCurrentOpenMenu(toOpen);
+    }, []);
+
+    // console.log(current, currentOpenMenu, menus);
 
     return (
         <Sider
@@ -56,7 +76,7 @@ export default function SiderBar({
             onCollapse={(collapsed, type) => {
                 console.log(collapsed, type);
             }}
-            width={"16%"}
+            width={"18%"}
             // style={{}}
             style={{
                 background: siderBg,
@@ -89,25 +109,19 @@ export default function SiderBar({
                     mode="inline"
                     className={classes.menu}
                     items={menus || []}
-                    selectedKeys={[current.key]}
+                    selectedKeys={!!current?.key ? [current?.key] : []}
                     onClick={(e) => {
                         // dispatch(setSelectedMenu(e.key));
+                        setCurrentOpenMenu({
+                            key: e.keyPath[e.keyPath.length - 1],
+                        });
                         setCurrent(e);
                     }}
-                    openKeys={openKeys}
+                    openKeys={
+                        !!currentOpenMenu?.key ? [currentOpenMenu?.key] : [""]
+                    }
                     onOpenChange={(keys) => {
-                        const latestOpenKey = keys.find(
-                            (key) => openKeys.indexOf(key) === -1
-                        );
-                        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-                            dispatch(setOpenKeys(keys));
-                        } else {
-                            dispatch(
-                                setOpenKeys(
-                                    latestOpenKey ? [latestOpenKey] : []
-                                )
-                            );
-                        }
+                        setCurrentOpenMenu({ key: keys[keys.length - 1] });
                     }}
                 />
             </SimpleBar>

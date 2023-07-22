@@ -15,10 +15,19 @@ export const API = Axios.create({
     },
 });
 
-const config = {
+const defConfig = {
     headers: {
         "Content-type": "application/json",
     },
+};
+
+const formConfig = (type) => {
+    if (!type) throw Error("invalid content-type");
+    return {
+        headers: {
+            "Content-type": `${type}`,
+        },
+    };
 };
 
 const doTokenInvalid = (dispatch) => () => {
@@ -32,10 +41,14 @@ export const PostAPI = createAsyncThunk(
         const {
             auth: { apps, token },
         } = getState();
-        const { url, data } = payload;
+        const { url, data, config } = payload;
+        let toConfig =
+            config === "application/json" || !config
+                ? defConfig
+                : formConfig(config);
         let response = false;
         try {
-            const resp = await API.post(url, data, config);
+            const resp = await API.post(url, data, toConfig);
             response = resp.data;
         } catch (error) {
             console.log({ error });

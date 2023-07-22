@@ -76,6 +76,7 @@ export default () => {
                     colorPrimary: theme.colorPrimary,
                     borderRadius: 8,
                     fontSize: 14,
+                    fontFamily: `'Inter', sans-serif`,
                 },
             }}
         >
