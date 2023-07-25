@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TableMaster from "../../../../../components/pages/table/TableMaster";
-import { Form, Input, InputNumber } from "antd";
+import { Col, Form, Input, InputNumber, Row, Select } from "antd";
+import { levelToRole, levels } from "../../../../../redux/reducer/levelConvert";
 
 export default function User() {
     const columns = [
@@ -20,7 +21,7 @@ export default function User() {
             title: "Level",
             dataIndex: "level",
             key: "level",
-            render: (text) => text,
+            render: (text) => levelToRole(text),
         },
         {
             title: "Email",
@@ -40,11 +41,15 @@ export default function User() {
         username: "",
         password: "",
         full_name: "",
-        level: 0,
+        level: "",
         email: "",
         no_telp: "",
         image: "",
     });
+
+    const optLevels = (arr = []) => {
+        return arr.map((item) => ({ label: item.value, value: item.level }));
+    };
     return (
         <TableMaster
             title={"Users"}
@@ -59,79 +64,128 @@ export default function User() {
                 // onSubmit: (row) => console.log(row),
                 form: (
                     <div>
-                        <Form.Item
-                            label="User Name"
-                            name="username"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Nama Tidak Boleh Kosong!",
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Password"
-                            name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Password Tidak Boleh Kosong!",
-                                },
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
-                        <Form.Item
-                            label="Full Name"
-                            name="fullname"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Full Name Tidak Boleh Kosong!",
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Level"
-                            name="level"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Level Tidak Boleh Kosong!",
-                                },
-                            ]}
-                        >
-                            <InputNumber />
-                        </Form.Item>
-                        <Form.Item
-                            label="Email"
-                            name="email"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Email Tidak Boleh Kosong!",
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="No. Telp."
-                            name="no_telp"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "No Telp. Tidak Boleh Kosong!",
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
+                        <Row gutter={32}>
+                            <Col lg={12}>
+                                <Form.Item
+                                    label="User Name"
+                                    name="username"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Nama Tidak Boleh Kosong!",
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col lg={12}>
+                                <Form.Item
+                                    label="Password"
+                                    name="password"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                "Password Tidak Boleh Kosong!",
+                                        },
+                                    ]}
+                                >
+                                    <Input.Password />
+                                </Form.Item>
+                            </Col>
+                            <Col lg={12}>
+                                <Form.Item
+                                    label="Full Name"
+                                    name="full_name"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                "Full Name Tidak Boleh Kosong!",
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col lg={12}>
+                                <Form.Item
+                                    label="Level"
+                                    name="level"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                "Level Tidak Boleh Kosong!",
+                                        },
+                                    ]}
+                                >
+                                    <Select
+                                        showSearch
+                                        style={{ width: "100%" }}
+                                        value={
+                                            optLevels(levels).find(
+                                                (item) =>
+                                                    item.value === state.level
+                                            ) || {}
+                                        }
+                                        placeholder="Search to Select"
+                                        optionFilterProp="children"
+                                        filterOption={(input, option) => {
+                                            return input.length > 3
+                                                ? (
+                                                      option?.label.toLowerCase() ??
+                                                      ""
+                                                  ).includes(
+                                                      input.toLowerCase()
+                                                  )
+                                                : false;
+                                        }}
+                                        filterSort={(optionA, optionB) =>
+                                            (optionA?.label ?? "")
+                                                .toLowerCase()
+                                                .localeCompare(
+                                                    (
+                                                        optionB?.label ?? ""
+                                                    ).toLowerCase()
+                                                )
+                                        }
+                                        options={optLevels(levels)}
+                                    />
+                                </Form.Item>
+                            </Col>
+                            <Col lg={12}>
+                                <Form.Item
+                                    label="Email"
+                                    name="email"
+                                    // rules={[
+                                    //     {
+                                    //         required: true,
+                                    //         message:
+                                    //             "Email Tidak Boleh Kosong!",
+                                    //     },
+                                    // ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col lg={12}>
+                                <Form.Item
+                                    label="No. Telp."
+                                    name="no_telp"
+                                    // rules={[
+                                    //     {
+                                    //         required: true,
+                                    //         message:
+                                    //             "No Telp. Tidak Boleh Kosong!",
+                                    //     },
+                                    // ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
                     </div>
                 ),
             }}

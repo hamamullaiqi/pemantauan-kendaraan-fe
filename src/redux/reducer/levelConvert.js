@@ -4,24 +4,20 @@ export const levels = [
         value: "Super Admin",
     },
     {
-        level: 0x10,
+        level: 0x90,
         value: "Admin",
     },
     {
-        level: 0x04,
-        value: "Head Office",
+        level: 0x40,
+        value: "Manager",
     },
     {
-        level: 0x08,
-        value: "Kanwil",
-    },
-    {
-        level: 0x02,
-        value: "Kanim",
+        level: 0x20,
+        value: "Supervisor",
     },
     {
         level: 0x01,
-        value: "TPI",
+        value: "staff",
     },
 ];
 

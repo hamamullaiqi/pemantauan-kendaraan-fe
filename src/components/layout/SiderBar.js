@@ -18,7 +18,7 @@ export default function SiderBar({
 }) {
     const ref = useRef();
     const [heightSideTop, setHeightSideTop] = useState(0);
-    const { selectedMenu, openKeys } = useSelector((state) => state.nav);
+    const { selectedMenu, openKeys } = useSelector((state) => state.apps);
     const { userdata } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
@@ -33,12 +33,20 @@ export default function SiderBar({
         setHeightSideTop(ref.current.clientHeight);
     }, []);
 
+    const menusLevel = useMemo(() => {
+        return (
+            Array.isArray(menus) &&
+            menus?.filter((item) => (item.level & userdata.level) > 0)
+        );
+    }, [menus]);
+    console.log(menusLevel);
+
     useEffect(() => {
         let result = {};
         let toOpen = {};
-        if (Array.isArray(menus)) {
-            for (let iii = 0; iii < menus.length; iii++) {
-                const el = menus[iii];
+        if (Array.isArray(menusLevel)) {
+            for (let iii = 0; iii < menusLevel.length; iii++) {
+                const el = menusLevel[iii];
                 if (!!el?.children && Array.isArray(el?.children)) {
                     for (let iv = 0; iv < el.children.length; iv++) {
                         const elChildren = el.children[iv];
@@ -108,7 +116,7 @@ export default function SiderBar({
                     theme="dark"
                     mode="inline"
                     className={classes.menu}
-                    items={menus || []}
+                    items={menusLevel || []}
                     selectedKeys={!!current?.key ? [current?.key] : []}
                     onClick={(e) => {
                         // dispatch(setSelectedMenu(e.key));
