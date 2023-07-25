@@ -62,10 +62,10 @@ export default function User() {
                 state: state,
                 url: "api/v1/user/add",
                 // onSubmit: (row) => console.log(row),
-                form: (
+                form: ({ edited }) => (
                     <div>
                         <Row gutter={32}>
-                            <Col lg={12}>
+                            <Col lg={!!edited ? 24 : 12}>
                                 <Form.Item
                                     label="User Name"
                                     name="username"
@@ -79,21 +79,23 @@ export default function User() {
                                     <Input />
                                 </Form.Item>
                             </Col>
-                            <Col lg={12}>
-                                <Form.Item
-                                    label="Password"
-                                    name="password"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                "Password Tidak Boleh Kosong!",
-                                        },
-                                    ]}
-                                >
-                                    <Input.Password />
-                                </Form.Item>
-                            </Col>
+                            {!edited && (
+                                <Col lg={12}>
+                                    <Form.Item
+                                        label="Password"
+                                        name="password"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    "Password Tidak Boleh Kosong!",
+                                            },
+                                        ]}
+                                    >
+                                        <Input.Password />
+                                    </Form.Item>
+                                </Col>
+                            )}
                             <Col lg={12}>
                                 <Form.Item
                                     label="Full Name"

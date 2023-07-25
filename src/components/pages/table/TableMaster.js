@@ -34,14 +34,15 @@ const CreateForm = ({
     onFinish,
     form,
     state,
+    edited,
 }) => {
     return (
         <Modal
             title={
                 <Fragment>
-                    <Typography
-                        style={{ fontSize: "1.4rem" }}
-                    >{`Add ${title}`}</Typography>
+                    <Typography style={{ fontSize: "1.4rem" }}>{`${
+                        !!edited ? "Edit" : "Add"
+                    } ${title}`}</Typography>
                     <Divider />
                 </Fragment>
             }
@@ -62,7 +63,11 @@ const CreateForm = ({
                 // onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
-                {!!form ? form : <Typography>Empty</Typography>}
+                {!!form ? (
+                    form({ state, edited })
+                ) : (
+                    <Typography>Empty</Typography>
+                )}
                 {!!form && (
                     <div
                         style={{
@@ -318,6 +323,7 @@ export default function TableMaster({
                         })
                     }
                     state={formatedEditData}
+                    edited={!!editData}
                 />
             )}
         </div>

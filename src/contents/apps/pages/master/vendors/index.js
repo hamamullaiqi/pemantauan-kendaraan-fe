@@ -41,7 +41,7 @@ export default function Vendor() {
                 state: state,
                 url: "api/v1/vendor/add",
                 // onSubmit: (row) => console.log(row),
-                form: (
+                form: () => (
                     <div>
                         <Form.Item
                             label="Nama"
