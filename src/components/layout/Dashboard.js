@@ -18,7 +18,7 @@ const { Header, Content, Footer } = Layout;
 
 const useStyle = createUseStyles({
     content: {
-        padding: 24,
+        padding: 16,
         background: ({ contentBackground }) => contentBackground,
     },
     header: {
@@ -209,11 +209,16 @@ export default function Dashboard({ children, menus, themes }) {
                 {/* <Scrollbars> */}
                 <Content>
                     <SimpleBar
-                        style={{ maxHeight: `calc(100vh - 54px)` }}
+                        style={{ maxHeight: `calc(100vh - 58px)` }}
                         // forceVisible="y"
                         autoHide={false}
                     >
-                        <div className={classes.content}>{children}</div>
+                        <div
+                            className={classes.content}
+                            style={{ height: `calc(100vh - 58px)` }}
+                        >
+                            {children}
+                        </div>
                     </SimpleBar>
                 </Content>
 
