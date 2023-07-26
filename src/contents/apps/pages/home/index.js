@@ -131,33 +131,41 @@ const TabsContent = ({ type, state, setState }) => {
     );
 };
 
+const defaultValue = {
+    nama_supir: "",
+    produk_id: null,
+    vendor_id: null,
+    keterangan: "",
+    gross: 0,
+    tare: 0,
+    nomer_polisi: "",
+};
+
 export default function Home() {
     const dispatch = useDispatch();
-    const [state, setState] = useState({
-        nama_supir: "",
-        produk_id: null,
-        vendor_id: null,
-        keterangan: "",
-        gross: 0,
-        tare: 0,
-        nomer_polisi: "",
-    });
-    console.log(state);
+    const [state, setState] = useState(defaultValue);
+    const [tabValue, setTabValue] = useState("kendaraan_masuk");
+
+    const uri = useMemo(() => {
+        return tabValue === "kendaraan_masuk"
+            ? "api/v1/kendaraan_masuk/add"
+            : "api/v1/kendaraan_keluar/add";
+    }, [tabValue]);
 
     const onFinish = (value) => {
-        dispatch(PostAPI({ url: "api/v1/kendaraan_keluar/add", data: value }));
+        dispatch(PostAPI({ url: uri, data: value }));
     };
     const tabs = [
         {
             label: "kendaraan Masuk",
-            key: "kendaraan Masuk",
+            key: "kendaraan_masuk",
             children: (
                 <TabsContent state={state} setState={setState} type={"Masuk"} />
             ),
         },
         {
             label: "kendaraan Keluar",
-            key: "kendaraan Keluar",
+            key: "kendaraan_keluar",
             children: (
                 <TabsContent
                     state={state}
@@ -195,7 +203,12 @@ export default function Home() {
                             <Typography.Title level={4}>
                                 Form Timbangan Kendaraan
                             </Typography.Title>
-                            <Tabs defaultActiveKey="1" centered items={tabs} />
+                            <Tabs
+                                activeKey={tabValue}
+                                onChange={(val) => setTabValue(val)}
+                                centered
+                                items={tabs}
+                            />
                         </Form>
                     </MainCard>
                 </Col>
