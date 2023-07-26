@@ -4,6 +4,8 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import fetcher from "../../../../helper/fetcher";
 import SelectAsync from "../../../../components/SelectAsync";
+import { useDispatch } from "react-redux";
+import { PostAPI } from "../../../../redux";
 const { TextArea } = Input;
 
 const TabsContent = ({ type, state, setState }) => {
@@ -61,7 +63,7 @@ const TabsContent = ({ type, state, setState }) => {
                 <Col lg={12}>
                     <Form.Item
                         label="Produk"
-                        name="Produk_id"
+                        name="produk_id"
                         rules={[
                             {
                                 required: true,
@@ -106,16 +108,7 @@ const TabsContent = ({ type, state, setState }) => {
                     </Form.Item>
                 </Col>
                 <Col lg={24}>
-                    <Form.Item
-                        label="Keterangan"
-                        name="keterangan"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Keterangan Tidak Boleh Kosong!",
-                            },
-                        ]}
-                    >
+                    <Form.Item label="Keterangan" name="keterangan">
                         <TextArea rows={4} />
                     </Form.Item>
                 </Col>
@@ -139,6 +132,7 @@ const TabsContent = ({ type, state, setState }) => {
 };
 
 export default function Home() {
+    const dispatch = useDispatch();
     const [state, setState] = useState({
         nama_supir: "",
         produk_id: null,
@@ -147,12 +141,11 @@ export default function Home() {
         gross: 0,
         tare: 0,
         nomer_polisi: "",
-        petugas_id: null,
     });
     console.log(state);
 
     const onFinish = (value) => {
-        console.log("fin", value);
+        dispatch(PostAPI({ url: "api/v1/kendaraan_keluar/add", data: value }));
     };
     const tabs = [
         {
