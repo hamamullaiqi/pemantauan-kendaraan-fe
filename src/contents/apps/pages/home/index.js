@@ -179,6 +179,7 @@ export default function Home() {
         console.log(result?.payload?.status);
         if (result?.payload?.status === "success") {
             formRef.current?.resetFields();
+            setTimestamp(dayjs().unix());
         }
     };
     const tabs = [
