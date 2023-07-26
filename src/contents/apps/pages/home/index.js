@@ -1,6 +1,6 @@
 import { Button, Col, Form, Input, Row, Select, Tabs, Typography } from "antd";
 import MainCard from "../../../../components/MainCard";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import fetcher from "../../../../helper/fetcher";
 import SelectAsync from "../../../../components/SelectAsync";
@@ -143,6 +143,7 @@ const defaultValue = {
 
 export default function Home() {
     const dispatch = useDispatch();
+    const formRef = useRef(null);
     const [state, setState] = useState(defaultValue);
     const [tabValue, setTabValue] = useState("kendaraan_masuk");
 
@@ -152,8 +153,12 @@ export default function Home() {
             : "api/v1/kendaraan_keluar/add";
     }, [tabValue]);
 
-    const onFinish = (value) => {
-        dispatch(PostAPI({ url: uri, data: value }));
+    const onFinish = async (value) => {
+        const result = await dispatch(PostAPI({ url: uri, data: value }));
+        console.log(result?.payload?.status);
+        if (result?.payload?.status === "success") {
+            formRef.current?.resetFields();
+        }
     };
     const tabs = [
         {
@@ -193,6 +198,7 @@ export default function Home() {
                     <MainCard style={{ height: "100%" }}>
                         <Form
                             name="basic"
+                            ref={formRef}
                             // style={{ maxWidth: 600 }}
                             layout="vertical"
                             initialValues={state}
