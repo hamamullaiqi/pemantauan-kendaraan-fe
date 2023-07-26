@@ -1,4 +1,14 @@
-import { Button, Col, Form, Input, Row, Select, Tabs, Typography } from "antd";
+import {
+    Button,
+    Col,
+    Form,
+    Input,
+    List,
+    Row,
+    Select,
+    Tabs,
+    Typography,
+} from "antd";
 import MainCard from "../../../../components/MainCard";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
@@ -6,6 +16,7 @@ import fetcher from "../../../../helper/fetcher";
 import SelectAsync from "../../../../components/SelectAsync";
 import { useDispatch } from "react-redux";
 import { PostAPI } from "../../../../redux";
+import dayjs from "dayjs";
 const { TextArea } = Input;
 
 const TabsContent = ({ type, state, setState }) => {
@@ -146,12 +157,22 @@ export default function Home() {
     const formRef = useRef(null);
     const [state, setState] = useState(defaultValue);
     const [tabValue, setTabValue] = useState("kendaraan_masuk");
+    const [timestamp, setTimestamp] = useState(dayjs().unix());
 
     const uri = useMemo(() => {
         return tabValue === "kendaraan_masuk"
             ? "api/v1/kendaraan_masuk/add"
             : "api/v1/kendaraan_keluar/add";
     }, [tabValue]);
+
+    const uriAktifitas = useMemo(() => {
+        return tabValue === "kendaraan_masuk"
+            ? `api/v1/kendaraan_masuk/paging?page=1&perPage=5&timestamp=${timestamp}`
+            : `api/v1/kendaraan_keluar/paging?page=1&perPage=5&timestamp=${timestamp}`;
+    }, [tabValue, timestamp]);
+
+    const { data: result } = useSWR(uriAktifitas, fetcher);
+    console.log(result?.data?.rows);
 
     const onFinish = async (value) => {
         const result = await dispatch(PostAPI({ url: uri, data: value }));
@@ -220,6 +241,29 @@ export default function Home() {
                 </Col>
                 <Col lg={6} style={{ height: "inherit" }}>
                     <Typography.Title level={5}>Aktifitas</Typography.Title>
+                    <List
+                        itemLayout="vertical"
+                        dataSource={result?.data?.rows || []}
+                        renderItem={(item, index) => (
+                            <List.Item key={index}>
+                                <List.Item.Meta title={item?.nomer_polisi} />
+                                <div>
+                                    <Typography>
+                                        Gross: {item?.gross || 0} || Tare :{" "}
+                                        {item?.tare || 0} || Nett :{" "}
+                                        {item?.nett || 0}
+                                    </Typography>
+                                    <Typography>
+                                        {dayjs(
+                                            tabValue === "kendaraan_masuk"
+                                                ? item?.waktu_masuk
+                                                : item?.waktu_keluar
+                                        ).format("DD/MMM/YYYY HH:ss")}
+                                    </Typography>
+                                </div>
+                            </List.Item>
+                        )}
+                    />
                 </Col>
             </Row>
         </div>
