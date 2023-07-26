@@ -13,16 +13,16 @@ import { store } from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    // <React.StrictMode>
-    <Provider store={store}>
-        <Suspense fallback={<p>Loading...</p>}>
-            <Fragment>
-                <App />
-                <ToastContainer newestOnTop autoClose={3000} />
-            </Fragment>
-        </Suspense>
-    </Provider>
-    // </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    <Suspense fallback={<p>Loading...</p>}>
+      <Fragment>
+        <App />
+        <ToastContainer newestOnTop autoClose={3000} />
+      </Fragment>
+    </Suspense>
+  </Provider>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
