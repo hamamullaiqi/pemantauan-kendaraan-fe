@@ -34,7 +34,7 @@ export default function Produk() {
                 state: state,
                 url: "api/v1/produk/add",
                 // onSubmit: (row) => console.log(row),
-                form: (
+                form: () => (
                     <div>
                         <Form.Item
                             label="Nama"

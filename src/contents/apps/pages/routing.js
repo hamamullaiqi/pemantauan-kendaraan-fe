@@ -11,17 +11,17 @@ export const Routing = [
     },
     {
         to: "/master/produk",
-        level: 0x1fff,
+        level: 0x1ff0,
         component: <Produk />,
     },
     {
         to: "/master/vendor",
-        level: 0x1fff,
+        level: 0x1ff0,
         component: <Vendor />,
     },
     {
         to: "/master/users",
-        level: 0x1fff,
+        level: 0x1ff0,
         component: <User />,
     },
 ];

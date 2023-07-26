@@ -14,7 +14,6 @@ const TheRouter = () => {
         userdata: { level },
     } = useSelector((state) => state.auth);
     const routes = Routing.filter((r) => (r.level & level) > 0);
-    console.log(routes);
 
     return (
         <Routes>
