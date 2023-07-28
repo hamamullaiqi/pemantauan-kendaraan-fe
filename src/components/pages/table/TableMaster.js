@@ -116,7 +116,7 @@ export default function TableMaster({
 
     const formatedEditData = useMemo(() => {
         return !!editData ? editData : renderCreate?.state;
-    }, [renderCreate.state, editData]);
+    }, [renderCreate?.state, editData]);
 
     const uri = useMemo(() => {
         return `${url}?page=${page}&perPage=${perPage}&search=${search}&filters=${
