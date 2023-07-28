@@ -57,7 +57,7 @@ export const PostAPI = createAsyncThunk(
         } catch (error) {
             console.log({ error });
             toast.dismiss();
-            toast.error(error.message);
+            toast.error(error?.response?.data?.message);
         }
         dispatch(unsetLoading());
         return response;

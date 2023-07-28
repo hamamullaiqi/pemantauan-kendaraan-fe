@@ -3,7 +3,7 @@ import fetcher from "../helper/fetcher";
 import useSWR from "swr";
 import { Select } from "antd";
 
-export default function SelectAsync({ url, onChange }) {
+export default function SelectAsync({ url, onChange, value }) {
     const [qry, setQry] = useState("");
     const [qryStr, setQryStr] = useState("");
 
@@ -27,6 +27,7 @@ export default function SelectAsync({ url, onChange }) {
             placeholder="Select ..."
             optionFilterProp="children"
             onChange={onChange}
+            value={value}
             onSearch={(val) => {
                 setQryStr(val);
             }}
