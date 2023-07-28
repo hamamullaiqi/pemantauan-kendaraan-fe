@@ -36,8 +36,8 @@ const TabsContent = ({ type, state, setState }) => {
                     >
                         <SelectAsync
                             url={"api/v1/vendor/all"}
+                            value={state?.produk_id}
                             onChange={(val) => {
-                                console.log(val);
                                 setState({ ...state, vendor_id: val });
                             }}
                         />
@@ -84,6 +84,7 @@ const TabsContent = ({ type, state, setState }) => {
                     >
                         <SelectAsync
                             url={"api/v1/produk/all"}
+                            value={state?.produk_id}
                             onChange={(val) =>
                                 setState({ ...state, produk_id: val })
                             }
@@ -159,6 +160,8 @@ export default function Home() {
     const [tabValue, setTabValue] = useState("kendaraan_masuk");
     const [timestamp, setTimestamp] = useState(dayjs().unix());
 
+    console.log(state, formRef);
+
     const uri = useMemo(() => {
         return tabValue === "kendaraan_masuk"
             ? "api/v1/kendaraan_masuk/add"
@@ -168,11 +171,10 @@ export default function Home() {
     const uriAktifitas = useMemo(() => {
         return tabValue === "kendaraan_masuk"
             ? `api/v1/kendaraan_masuk/paging?page=1&perPage=5&timestamp=${timestamp}`
-            : `api/v1/kendaraan_keluar/paging?page=1&perPage=5&timestamp=${timestamp}`;
+            : `api/v1/kendaraan_masuk/paging?page=1&perPage=5&timestamp=${timestamp}`;
     }, [tabValue, timestamp]);
 
     const { data: result } = useSWR(uriAktifitas, fetcher);
-    console.log(result?.data?.rows);
 
     const onFinish = async (value) => {
         const result = await dispatch(PostAPI({ url: uri, data: value }));
@@ -233,7 +235,12 @@ export default function Home() {
                             </Typography.Title>
                             <Tabs
                                 activeKey={tabValue}
-                                onChange={(val) => setTabValue(val)}
+                                onChange={(val) => {
+                                    formRef?.current.setFieldsValue(
+                                        defaultValue
+                                    );
+                                    setTabValue(val);
+                                }}
                                 centered
                                 items={tabs}
                             />
@@ -261,6 +268,24 @@ export default function Home() {
                                                 : item?.waktu_keluar
                                         ).format("DD/MMM/YYYY HH:ss")}
                                     </Typography>
+                                    <Button
+                                        onClick={() => {
+                                            setTabValue("kendaraan_keluar");
+                                            const value = {
+                                                nama_supir: item?.nama_supir,
+                                                vendor_id: item?.vendor_id,
+                                                produk_id: item?.produk_id,
+                                                nomer_polisi:
+                                                    item?.nomer_polisi,
+                                            };
+                                            setState(value);
+                                            formRef?.current?.setFieldsValue(
+                                                value
+                                            );
+                                        }}
+                                    >
+                                        Select
+                                    </Button>
                                 </div>
                             </List.Item>
                         )}
