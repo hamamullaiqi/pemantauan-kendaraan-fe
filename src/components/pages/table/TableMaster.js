@@ -183,7 +183,7 @@ export default function TableMaster({
     }, [columns]);
 
     const handleCreate = async ({ value, onSubmit, url, config, editUrl }) => {
-        if (!url) throw Error("invalid url");
+        if (!url && !editData) throw Error("invalid url");
         let newValue = typeof onSubmit === "function" ? onSubmit(value) : value;
         const resp =
             !!editData && !!editUrl
@@ -231,7 +231,7 @@ export default function TableMaster({
                 </div>
                 <div id="right" style={{ display: "flex", gap: 8 }}>
                     <Button icon={<HiOutlineFilter size={14} />}>Filter</Button>
-                    {!!renderCreate && (
+                    {!!renderCreate?.url && (
                         <Button
                             type="primary"
                             icon={<IoMdAdd size={14} />}
