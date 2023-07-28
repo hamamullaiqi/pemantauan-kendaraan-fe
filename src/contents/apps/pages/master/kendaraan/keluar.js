@@ -58,6 +58,7 @@ export default function MasterKeluar() {
             title={"Kendaraan Keluar"}
             url={"api/v1/kendaraan_keluar/paging"}
             columns={columns}
+            editable={{ url: "api/v1/kendaraan_keluar/edit" }}
             deletable={{ url: "api/v1/kendaraan_keluar/delete_keluar" }}
         />
     );

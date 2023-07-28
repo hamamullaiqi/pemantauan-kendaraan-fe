@@ -203,6 +203,10 @@ export default function TableMaster({
         }
     };
 
+    if (!!editable && !renderCreate?.form) {
+        console.warn("if edited content you mush add renderCreate.form props");
+    }
+
     return (
         <div>
             <div
@@ -313,7 +317,7 @@ export default function TableMaster({
                     handleCancel={() => setOpenCreate(!openCreate)}
                     handleOk={() => setOpenCreate(!openCreate)}
                     title={title}
-                    form={renderCreate.form}
+                    form={renderCreate?.form}
                     onFinish={(value) =>
                         handleCreate({
                             value: value,

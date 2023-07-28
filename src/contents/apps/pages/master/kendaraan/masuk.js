@@ -68,6 +68,7 @@ export default function MasterMasuk() {
             title={"Kendaraan Masuk"}
             url={"api/v1/kendaraan_masuk/paging"}
             columns={columns}
+            editable={{ url: "api/v1/kendaraan_masuk/edit" }}
             deletable={{ url: "api/v1/kendaraan_masuk/delete_masuk" }}
         />
     );
