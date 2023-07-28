@@ -23,6 +23,18 @@ const Menus = [
     level: 0x1ff0,
     children: [
       {
+        key: "/apps/master/masuk",
+        icon: <GoDotFill size={SIZE} />,
+        level: 0x1ff0,
+        label: <Link to={"/apps/master/masuk"}>Kendaraan Masuk</Link>,
+      },
+      {
+        key: "/apps/master/keluar",
+        icon: <GoDotFill size={SIZE} />,
+        level: 0x1ff0,
+        label: <Link to={"/apps/master/keluar"}>Kendaraan Keluar</Link>,
+      },
+      {
         key: "/apps/master/produk",
         icon: <GoDotFill size={SIZE} />,
         level: 0x1ff0,
