@@ -154,7 +154,7 @@ export default function TableMaster({
                 key: "action",
                 render: (_, record) => (
                     <Space size="middle">
-                        {!!editable.url && (
+                        {!!editable?.url && (
                             <Button
                                 onClick={() => {
                                     setEditData(record);
@@ -169,7 +169,7 @@ export default function TableMaster({
                             <Button
                                 type="primary"
                                 onClick={() =>
-                                    handleDelete(deletable.url, record?.id)
+                                    handleDelete(deletable?.url, record?.id)
                                 }
                             >
                                 Delete
