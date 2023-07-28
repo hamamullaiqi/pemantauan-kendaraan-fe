@@ -1,6 +1,13 @@
 import { blue, grey } from "@ant-design/colors";
 import { ReloadOutlined } from "@ant-design/icons";
-import { Button, Divider, Form, theme as themeBase, Input, Typography } from "antd";
+import {
+  Button,
+  Divider,
+  Form,
+  theme as themeBase,
+  Input,
+  Typography,
+} from "antd";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -10,6 +17,7 @@ import { createUseStyles } from "react-jss";
 import { useDispatch } from "react-redux";
 import { useTheme } from "../../hook/useTheme";
 import { login } from "../../redux/reducer/auth";
+import { Link, Navigate } from "react-router-dom";
 
 // import { CreateRandomString } from '../../login/utils';
 
@@ -33,13 +41,13 @@ export default function Login({ apps, theme }) {
   const dispatch = useDispatch();
   const [image, setImage] = useState("");
   const {
-    token: { colorPrimary:BaseColorPrimary },
+    token: { colorPrimary: BaseColorPrimary },
   } = themeBase.useToken();
-  const { colorPrimary } = theme || {colorPrimary:''}
+  const { colorPrimary } = theme || { colorPrimary: "" };
 
-  const currentColorPrimary = !!colorPrimary ? colorPrimary :  BaseColorPrimary
+  const currentColorPrimary = !!colorPrimary ? colorPrimary : BaseColorPrimary;
   const classes = useStyle({ currentColorPrimary });
-  
+
   // const createRandomStr = () => {
   //     const timestamps = (new Date()).getTime();
   //     return timestamps + '_' + CreateRandomString(16);

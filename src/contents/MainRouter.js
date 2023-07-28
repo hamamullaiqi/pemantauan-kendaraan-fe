@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import AppsPage from "./apps";
 import Landing from "../components/layout/Landing";
+import Login from "../contents/auth/Login";
 
 export default function MainRouter() {
   return (
@@ -16,6 +17,7 @@ export default function MainRouter() {
         <Route exact path="/" element={<Landing />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/apps/*" element={<AppsPage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/*" element={<div>Not Found</div>} />
       </Routes>
     </Router>

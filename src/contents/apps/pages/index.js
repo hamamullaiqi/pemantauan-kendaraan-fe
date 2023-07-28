@@ -10,42 +10,42 @@ import { useLocalTheme } from "../localHook/useLocalTheme";
 import { ConfigProvider } from "antd";
 
 const TheRouter = () => {
-    const {
-        userdata: { level },
-    } = useSelector((state) => state.auth);
-    const routes = Routing.filter((r) => (r.level & level) > 0);
+  const {
+    userdata: { level },
+  } = useSelector((state) => state.auth);
+  const routes = Routing.filter((r) => (r.level & level) > 0);
 
-    return (
-        <Routes>
-            {routes.map((route, idx) => (
-                <Route
-                    key={idx}
-                    replace
-                    path={route.to}
-                    // exact={route.isExact !== false}
-                    element={!!route.component && route.component}
-                />
-            ))}
-            <Route path={"/*"} element={<div>Page Not Found</div>} />
-        </Routes>
-    );
+  return (
+    <Routes>
+      {routes.map((route, idx) => (
+        <Route
+          key={idx}
+          replace
+          path={route.to}
+          // exact={route.isExact !== false}
+          element={!!route.component && route.component}
+        />
+      ))}
+      <Route path={"/*"} element={<div>Page Not Found</div>} />
+    </Routes>
+  );
 };
 
 export default ({ theme, idx }) => {
-    const dispatch = useDispatch();
-    // useEffect(() => {
-    //   dispatch(loadAirlines());
-    //   dispatch(loadAirports());
-    // }, []);
-    const {
-        userdata: { level },
-    } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(loadAirlines());
+  //   dispatch(loadAirports());
+  // }, []);
+  const {
+    userdata: { level },
+  } = useSelector((state) => state.auth);
 
-    return (
-        <Fragment>
-            <Dashboard menus={Menus} themes={theme}>
-                <TheRouter />
-            </Dashboard>
-        </Fragment>
-    );
+  return (
+    <Fragment>
+      <Dashboard menus={Menus} themes={theme}>
+        <TheRouter />
+      </Dashboard>
+    </Fragment>
+  );
 };
