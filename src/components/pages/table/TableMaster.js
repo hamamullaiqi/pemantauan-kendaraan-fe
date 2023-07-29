@@ -74,7 +74,7 @@ const CreateForm = ({
                             display: "flex",
                             justifyContent: "center",
                             gap: 8,
-                            marginTop: 56,
+                            marginTop: 24,
                         }}
                     >
                         <Button type="default" onClick={handleCancel}>
