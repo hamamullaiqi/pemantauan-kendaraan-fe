@@ -8,6 +8,7 @@ import {
 import AppsPage from "./apps";
 import Landing from "../components/layout/Landing";
 import Login from "../contents/auth/Login";
+import Profile from "./apps/pages/profile/profile";
 
 export default function MainRouter() {
   return (

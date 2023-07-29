@@ -6,7 +6,7 @@ import "../../assets/css/landing.css";
 import { Container, Button } from "react-bootstrap";
 import { Link, Navigate, useNavigate, NavLink } from "react-router-dom";
 
-import LOGOSection from "../../assets/img/download.png";
+import LOGOSection from "../../assets/img/pabrik.jpg";
 
 const Nav = styled.nav`
   background: white;
@@ -61,7 +61,7 @@ const Logo = styled.div`
 // border-radius: 500px;
 
 const Section = styled(motion.section)`
-  height: 100vh;
+  height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,7 +94,7 @@ const heroVariants = {
   visible: { opacity: 3, transition: { duration: 5 } },
 };
 
-export default function Landing({ children, onClick, disabled }) {
+export default function Landing() {
   const navigate = useNavigate();
   return (
     <div>
@@ -126,7 +126,7 @@ export default function Landing({ children, onClick, disabled }) {
           initial="hidden"
           animate="visible"
         >
-          <img src={LOGOSection} width={1000} height={350} alt="" />
+          <img src={LOGOSection} width={1000} height={375} alt="" />
           {/* 
           <Button variant="light"></Button>
           <button class="cool-button" >
@@ -134,14 +134,7 @@ export default function Landing({ children, onClick, disabled }) {
           </button> */}
         </Container>
       </Section>
-      <AboutSection id="about">
-        {/* <h2>About Us</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p> */}
-      </AboutSection>
-      <ServicesSection id="services">
-        {/* <h2>Our Services</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p> */}
-      </ServicesSection>
+
       <FooterSection>
         <p>&copy; {new Date().getFullYear()} PT SGF Manufacturing.</p>
       </FooterSection>

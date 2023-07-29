@@ -190,14 +190,14 @@ export default function Home() {
       label: "kendaraan Masuk",
       key: "kendaraan_masuk",
       children: (
-        <TabsContent state={state} setState={setState} type={"Masuk"} />
+        <TabsContent state={state} setState={setState} type={"Tambah Masuk"} />
       ),
     },
     {
       label: "kendaraan Keluar",
       key: "kendaraan_keluar",
       children: (
-        <TabsContent state={state} setState={setState} type={"Keluar"} />
+        <TabsContent state={state} setState={setState} type={"Tambah Keluar"} />
       ),
     },
   ];
@@ -228,7 +228,7 @@ export default function Home() {
               autoComplete="off"
             >
               <Typography.Title level={4}>
-                Form Timbangan Kendaraan
+                Form Input Data Kendaraan{" "}
               </Typography.Title>
               <Tabs
                 activeKey={tabValue}
@@ -244,7 +244,7 @@ export default function Home() {
         </Col>
         <Col lg={8} style={{ height: "inherit" }}>
           <Typography.Title level={5}>
-            Timbangan masuk baru-baru ini
+            Aktfitas Kendaraan baru-baru ini
           </Typography.Title>
           <List
             itemLayout="vertical"

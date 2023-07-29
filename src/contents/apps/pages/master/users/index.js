@@ -52,7 +52,7 @@ export default function User() {
   };
   return (
     <TableMaster
-      title={"Users"}
+      title={"Master Users"}
       url={"api/v1/user/paging"}
       columns={columns}
       editable={{ url: "api/v1/user/edit" }}

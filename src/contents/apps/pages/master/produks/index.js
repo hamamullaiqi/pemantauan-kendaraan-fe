@@ -24,7 +24,7 @@ export default function Produk() {
   });
   return (
     <TableMaster
-      title={"Produk"}
+      title={"Master Produk"}
       url={"api/v1/produk/paging"}
       columns={columns}
       editable={{ url: "api/v1/produk/edit" }}

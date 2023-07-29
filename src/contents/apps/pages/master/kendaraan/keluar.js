@@ -83,7 +83,7 @@ export default function MasterKeluar() {
   const [state, setState] = useState(defaultValue);
   return (
     <TableMaster
-      title={"Kendaraan Keluar"}
+      title={"Master Kendaraan Keluar"}
       url={"api/v1/kendaraan_keluar/paging"}
       columns={columns}
       editable={{ url: "api/v1/kendaraan_keluar/edit" }}

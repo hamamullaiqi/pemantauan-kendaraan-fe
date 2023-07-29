@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOpenKeys, setSelectedMenu } from "../../redux";
 import Scrollbars from "react-custom-scrollbars";
 import SimpleBar from "simplebar-react";
+import LogoPt from "../../assets/img/logoptsgf.png";
 const { Sider } = Layout;
 
 export default function SiderBar({
@@ -94,10 +95,8 @@ export default function SiderBar({
     >
       <div ref={ref}>
         <div className={classes.logo}>
-          <Avatar
-            icon={<SafetyCertificateFilled style={{ color: colorPrimary }} />}
-            style={{ backgroundColor: "white" }}
-          />
+          <img src={LogoPt} width={75} height={50} alt="" />
+
           <p>PT SGF</p>
         </div>
       </div>
