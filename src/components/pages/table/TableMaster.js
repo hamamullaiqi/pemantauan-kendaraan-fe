@@ -1,6 +1,7 @@
 import React, { Fragment, useMemo, useState } from "react";
 import { HiOutlineFilter } from "react-icons/hi";
 import { IoMdAdd, IoMdRefresh } from "react-icons/io";
+import { BiExport } from "react-icons/bi";
 import MainCard from "../../MainCard";
 import useSWR from "swr";
 import fetcher from "../../../helper/fetcher";
@@ -17,6 +18,8 @@ import {
     Modal,
     Form,
     Divider,
+    Row,
+    Col,
 } from "antd";
 import { useDispatch } from "react-redux";
 import { PatchAPI, PostAPI } from "../../../redux";
@@ -24,6 +27,7 @@ import { DestroyAPI } from "../../../redux/reducer/apiHandling";
 import MainTable from "./MainTable";
 
 const { Search } = Input;
+const { RangePicker } = DatePicker;
 const PAGE = 1;
 const PERPAGE = 10;
 
@@ -97,10 +101,114 @@ const CreateForm = ({
     );
 };
 
+const ExportDialog = ({ isModalOpen, handleCancel, onFinish, form, state }) => {
+    const [newState, setNewState] = useState({
+        document_type: "pdf",
+        date: [dayjs(), dayjs().add(1, "days")],
+        ...state,
+    });
+    return (
+        <Modal
+            title={
+                <Fragment>
+                    <Typography style={{ fontSize: "1.4rem" }}>
+                        To Export Document
+                    </Typography>
+                    <Divider />
+                </Fragment>
+            }
+            width={"50%"}
+            style={{ top: 40 }}
+            open={isModalOpen}
+            // onOk={onFinish}
+            // okButtonProps={{ disabled: typeof onFinish !== "function" }}
+            onCancel={handleCancel}
+            footer={null}
+        >
+            <Form
+                name="basic"
+                // style={{ maxWidth: 600 }}
+                layout="vertical"
+                initialValues={typeof newState === "object" ? newState : {}}
+                onFinish={onFinish}
+                // onFinishFailed={onFinishFailed}
+                autoComplete="off"
+            >
+                <Row gutter={16}>
+                    <Col lg={12}>
+                        <Form.Item
+                            label="Document Type"
+                            name="document_type"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Nama Tidak Boleh Kosong!",
+                                },
+                            ]}
+                        >
+                            <Input disabled />
+                        </Form.Item>
+                    </Col>
+                    <Col lg={12}>
+                        <Form.Item
+                            label="Date Range "
+                            name="date"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Nama Tidak Boleh Kosong!",
+                                },
+                            ]}
+                        >
+                            <RangePicker
+                                format={"DD/MM/YY"}
+                                value={newState.document_type}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                {!!form ? (
+                    <Fragment>
+                        <Typography>Filters</Typography>
+                        <div>{form({ state })}</div>
+                    </Fragment>
+                ) : (
+                    <Typography>Empty</Typography>
+                )}
+                {!!form && (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: 8,
+                            marginTop: 24,
+                        }}
+                    >
+                        <Button type="default" onClick={handleCancel}>
+                            Cancel
+                        </Button>
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                disabled={typeof onFinish !== "function"}
+                            >
+                                Export Document
+                            </Button>
+                        </Form.Item>
+                    </div>
+                )}
+            </Form>
+        </Modal>
+    );
+};
+
 export default function TableMaster({
+    report,
     url,
     columns,
     renderCreate,
+    renderExport,
     title,
     editable,
     deletable,
@@ -111,25 +219,41 @@ export default function TableMaster({
     const [search, setSearch] = useState("");
     const [filters, setFilters] = useState({});
     const [refresh, setRefresh] = useState(dayjs().unix());
+    const [rangeDate, setRangeDate] = useState([
+        dayjs().add(-7, "days"),
+        dayjs(),
+    ]);
 
     const [openCreate, setOpenCreate] = useState(false);
+    const [openExport, setOpenExport] = useState(false);
     const [editData, setEditData] = useState(null);
 
     const formatedEditData = useMemo(() => {
         return !!editData ? editData : renderCreate?.state;
     }, [renderCreate?.state, editData]);
 
+    const formatedFilters = useMemo(() => {
+        let newValue = { ...filters };
+        if (!!report) {
+            newValue = {
+                ...newValue,
+                date: rangeDate,
+            };
+        }
+        return newValue;
+    }, [filters, report, rangeDate]);
+
     const uri = useMemo(() => {
         return `${url}?page=${page}&perPage=${perPage}&search=${search}&filters=${
-            Object.keys(filters).length !== 0 ? JSON.stringify(filters) : ""
+            Object.keys(formatedFilters).length !== 0
+                ? JSON.stringify(formatedFilters)
+                : ""
         }&timestamp=${refresh}`;
-    }, [page, perPage, search, filters, refresh, url]);
+    }, [page, perPage, search, refresh, url, formatedFilters]);
 
     const { data: datas, loading } = useSWR(uri, fetcher, {
         revalidateOnFocus: false,
     }) || { datas: [] };
-
-    console.log(datas, loading);
 
     const onSearch = (val) => {
         setSearch(val);
@@ -232,6 +356,15 @@ export default function TableMaster({
                 </div>
                 <div id="right" style={{ display: "flex", gap: 8 }}>
                     <Button icon={<HiOutlineFilter size={14} />}>Filter</Button>
+                    {!!report && (
+                        <Button
+                            icon={<BiExport size={14} />}
+                            type="primary"
+                            onClick={() => setOpenExport(!openExport)}
+                        >
+                            Export
+                        </Button>
+                    )}
                     {!!renderCreate?.url && (
                         <Button
                             type="primary"
@@ -259,7 +392,15 @@ export default function TableMaster({
                             justifyContent: "space-between",
                         }}
                     >
-                        <div></div>
+                        <div>
+                            {!!report && (
+                                <RangePicker
+                                    value={formatedFilters?.date}
+                                    format={"DD/MM/YY"}
+                                    onChange={(values) => setRangeDate(values)}
+                                />
+                            )}
+                        </div>
                         <div style={{ display: "flex", gap: 8 }}>
                             <Search
                                 placeholder="search.."
@@ -289,7 +430,6 @@ export default function TableMaster({
                             pageSize: datas?.data?.perPage || perPage,
                             showSizeChanger: true,
                             onChange: (pg, perPg) => {
-                                console.log(perPg);
                                 if (pg) {
                                     setPage(pg);
                                 }
@@ -318,6 +458,16 @@ export default function TableMaster({
                     }
                     state={formatedEditData}
                     edited={!!editData}
+                />
+            )}
+            {!!openExport && (
+                <ExportDialog
+                    isModalOpen={openExport}
+                    handleCancel={() => setOpenExport(!openExport)}
+                    handleOk={() => setOpenExport(!openExport)}
+                    form={renderExport?.form}
+                    state={renderExport?.state}
+                    onFinish={renderExport?.onSubmit}
                 />
             )}
         </div>

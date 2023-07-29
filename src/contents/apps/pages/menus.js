@@ -61,21 +61,21 @@ const Menus = [
         level: 0x1ff0,
         children: [
             {
-                key: "/apps/laporan/laporankendaraanmasuk",
+                key: "/apps/laporan/kendaraan-masuk",
                 icon: <GoDotFill size={SIZE} />,
                 level: 0x1ff0,
                 label: (
-                    <Link to={"/apps/laporan/laporankendaraanmasuk"}>
+                    <Link to={"/apps/laporan/kendaraan-masuk"}>
                         Kendaraan Masuk
                     </Link>
                 ),
             },
             {
-                key: "/apps/laporan/laporankendaraankeluar",
+                key: "/apps/laporan/kendaraan-keluar",
                 icon: <GoDotFill size={SIZE} />,
                 level: 0x1ff0,
                 label: (
-                    <Link to={"/apps/laporan/laporankendaraankeluar"}>
+                    <Link to={"/apps/laporan/kendaraan-keluar"}>
                         Kendaraan Keluar
                     </Link>
                 ),
