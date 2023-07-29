@@ -1,8 +1,8 @@
 import {
-  HiClipboardList,
-  HiHome,
-  HiOutlineDocument,
-  HiClipboard,
+    HiClipboardList,
+    HiHome,
+    HiOutlineDocument,
+    HiClipboard,
 } from "react-icons/hi";
 import { GoDotFill } from "react-icons/go";
 import { Link } from "react-router-dom";
@@ -10,79 +10,79 @@ import { Link } from "react-router-dom";
 const SIZE = 18;
 
 const Menus = [
-  {
-    key: "/apps/home",
-    icon: <HiHome size={SIZE} />,
-    level: 0x1fff,
+    {
+        key: "/apps/home",
+        icon: <HiHome size={SIZE} />,
+        level: 0x1fff,
 
-    label: <Link to={"/apps/home"}>Home</Link>,
-  },
-  {
-    key: "/apps/master",
-    icon: <HiClipboardList size={SIZE} />,
-    level: 0x1ff0,
-    children: [
-      {
-        key: "/apps/master/masuk",
-        icon: <GoDotFill size={SIZE} />,
+        label: <Link to={"/apps/home"}>Home</Link>,
+    },
+    {
+        key: "/apps/master",
+        icon: <HiClipboardList size={SIZE} />,
         level: 0x1ff0,
-        label: <Link to={"/apps/master/masuk"}>Kendaraan Masuk</Link>,
-      },
-      {
-        key: "/apps/master/keluar",
-        icon: <GoDotFill size={SIZE} />,
+        children: [
+            {
+                key: "/apps/master/masuk",
+                icon: <GoDotFill size={SIZE} />,
+                level: 0x1ff0,
+                label: <Link to={"/apps/master/masuk"}>Kendaraan Masuk</Link>,
+            },
+            {
+                key: "/apps/master/keluar",
+                icon: <GoDotFill size={SIZE} />,
+                level: 0x1ff0,
+                label: <Link to={"/apps/master/keluar"}>Kendaraan Keluar</Link>,
+            },
+            {
+                key: "/apps/master/produk",
+                icon: <GoDotFill size={SIZE} />,
+                level: 0x1ff0,
+                label: <Link to={"/apps/master/produk"}>Produk</Link>,
+            },
+            {
+                key: "/apps/master/vendor",
+                icon: <GoDotFill size={SIZE} />,
+                level: 0x1ff0,
+                label: <Link to={"/apps/master/vendor"}>Vendor</Link>,
+            },
+            {
+                key: "/apps/master/users",
+                icon: <GoDotFill size={SIZE} />,
+                level: 0x1ff0,
+                label: <Link to={"/apps/master/users"}>Users</Link>,
+            },
+        ],
+        label: <Link to={"#"}>Master</Link>,
+    },
+    {
+        key: "/apps/laporan",
+        icon: <HiClipboard size={SIZE} />,
         level: 0x1ff0,
-        label: <Link to={"/apps/master/keluar"}>Kendaraan Keluar</Link>,
-      },
-      {
-        key: "/apps/master/produk",
-        icon: <GoDotFill size={SIZE} />,
-        level: 0x1ff0,
-        label: <Link to={"/apps/master/produk"}>Produk</Link>,
-      },
-      {
-        key: "/apps/master/vendor",
-        icon: <GoDotFill size={SIZE} />,
-        level: 0x1ff0,
-        label: <Link to={"/apps/master/vendor"}>Vendor</Link>,
-      },
-      {
-        key: "/apps/master/users",
-        icon: <GoDotFill size={SIZE} />,
-        level: 0x1ff0,
-        label: <Link to={"/apps/master/users"}>Users</Link>,
-      },
-    ],
-    label: <Link to={"#"}>Master</Link>,
-  },
-  {
-    key: "/apps/laporan",
-    icon: <HiClipboard size={SIZE} />,
-    level: 0x1ff0,
-    children: [
-      {
-        key: "/apps/laporan/laporankendaraanmasuk",
-        icon: <GoDotFill size={SIZE} />,
-        level: 0x1ff0,
-        label: (
-          <Link to={"/apps/laporan/laporankendaraanmasuk"}>
-            Laporan Kendaraan Kendaraan Masuk
-          </Link>
-        ),
-      },
-      {
-        key: "/apps/laporan/laporankendaraankeluar",
-        icon: <GoDotFill size={SIZE} />,
-        level: 0x1ff0,
-        label: (
-          <Link to={"/apps/laporan/laporankendaraankeluar"}>
-            Laporan Kendaraan Keluar
-          </Link>
-        ),
-      },
-    ],
-    label: <Link to={"#"}>Laporan</Link>,
-  },
+        children: [
+            {
+                key: "/apps/laporan/laporankendaraanmasuk",
+                icon: <GoDotFill size={SIZE} />,
+                level: 0x1ff0,
+                label: (
+                    <Link to={"/apps/laporan/laporankendaraanmasuk"}>
+                        Kendaraan Masuk
+                    </Link>
+                ),
+            },
+            {
+                key: "/apps/laporan/laporankendaraankeluar",
+                icon: <GoDotFill size={SIZE} />,
+                level: 0x1ff0,
+                label: (
+                    <Link to={"/apps/laporan/laporankendaraankeluar"}>
+                        Kendaraan Keluar
+                    </Link>
+                ),
+            },
+        ],
+        label: <Link to={"#"}>Laporan</Link>,
+    },
 ];
 
 export default Menus;

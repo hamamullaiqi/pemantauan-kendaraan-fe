@@ -18,7 +18,7 @@ const defaultValue = {
 export default function MasterMasuk() {
     const columns = [
         {
-            title: "No Polis",
+            title: "No Polisi",
             dataIndex: "nomer_polisi",
             key: "nomer_polisi",
             render: (text) => text,
