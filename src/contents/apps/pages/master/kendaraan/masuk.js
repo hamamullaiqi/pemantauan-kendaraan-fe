@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TableMaster from "../../../../../components/pages/table/TableMaster";
 import { Col, Form, Input, Row } from "antd";
 import SelectAsync from "../../../../../components/SelectAsync";
+import dayjs from "dayjs";
 const { TextArea } = Input;
 
 const defaultValue = {
@@ -17,27 +18,51 @@ const defaultValue = {
 export default function MasterMasuk() {
     const columns = [
         {
-            title: "Np Kendaraan",
+            title: "No Polis",
             dataIndex: "nomer_polisi",
             key: "nomer_polisi",
             render: (text) => text,
         },
         {
-            title: "Nama",
+            title: "Nama Supir",
             dataIndex: "nama_supir",
             key: "nama_supir",
             render: (text) => text,
         },
         {
             title: "Produk",
-            dataIndex: "produk_id",
-            key: "produk_id",
-            render: (text) => text,
+            dataIndex: "produkMasuk",
+            key: "produkMasuk",
+            render: (row) => row?.nama || "",
         },
         {
             title: "Vendor",
-            dataIndex: "vendor_id",
-            key: "vendor_id",
+            dataIndex: "vendorMasuk",
+            key: "vendorMasuk",
+            render: (row) => row?.nama || "",
+        },
+
+        {
+            title: "Gross",
+            dataIndex: "gross",
+            key: "gross",
+            align: "right",
+            render: (text) => text,
+        },
+        {
+            title: "Tare",
+            dataIndex: "tare",
+            key: "tare",
+            align: "right",
+
+            render: (text) => text,
+        },
+        {
+            title: "Nett",
+            dataIndex: "nett",
+            key: "nett",
+            align: "right",
+
             render: (text) => text,
         },
         {
@@ -47,22 +72,10 @@ export default function MasterMasuk() {
             render: (text) => text,
         },
         {
-            title: "Gross",
-            dataIndex: "gross",
-            key: "gross",
-            render: (text) => text,
-        },
-        {
-            title: "Tare",
-            dataIndex: "tare",
-            key: "tare",
-            render: (text) => text,
-        },
-        {
-            title: "Nett",
-            dataIndex: "nett",
-            key: "nett",
-            render: (text) => text,
+            title: "Tanggal Masuk",
+            dataIndex: "waktu_masuk",
+            key: "waktu_masuk",
+            render: (text) => dayjs(text).format("DD/MM/YY HH:ss"),
         },
     ];
     const [state, setState] = useState(defaultValue);

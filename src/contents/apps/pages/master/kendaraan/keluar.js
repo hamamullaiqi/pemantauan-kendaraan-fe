@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TableMaster from "../../../../../components/pages/table/TableMaster";
 import { Col, Form, Input, Row } from "antd";
 import SelectAsync from "../../../../../components/SelectAsync";
+import dayjs from "dayjs";
 const { TextArea } = Input;
 
 const defaultValue = {
@@ -17,27 +18,52 @@ const defaultValue = {
 export default function MasterKeluar() {
     const columns = [
         {
-            title: "Np Kendaraan",
+            title: "No Polisi",
             dataIndex: "nomer_polisi",
             key: "nomer_polisi",
             render: (text) => text,
         },
         {
-            title: "Nama",
+            title: "Nama Supir",
             dataIndex: "nama_supir",
             key: "nama_supir",
             render: (text) => text,
         },
         {
             title: "Produk",
-            dataIndex: "produk_id",
-            key: "produk_id",
-            render: (text) => text,
+            dataIndex: "produkKeluar",
+            key: "produkKeluar",
+            render: (row) => row?.nama || "",
         },
         {
             title: "Vendor",
-            dataIndex: "vendor_id",
-            key: "vendor_id",
+            dataIndex: "vendorKeluar",
+            key: "vendorKeluar",
+            render: (row) => row?.nama || "",
+        },
+
+        {
+            title: "Gross",
+            dataIndex: "gross",
+            key: "gross",
+            align: "right",
+
+            render: (text) => text,
+        },
+        {
+            title: "Tare",
+            dataIndex: "tare",
+            key: "tare",
+            align: "right",
+
+            render: (text) => text,
+        },
+        {
+            title: "Nett",
+            dataIndex: "nett",
+            key: "nett",
+            align: "right",
+
             render: (text) => text,
         },
         {
@@ -47,22 +73,10 @@ export default function MasterKeluar() {
             render: (text) => text,
         },
         {
-            title: "Gross",
-            dataIndex: "gross",
-            key: "gross",
-            render: (text) => text,
-        },
-        {
-            title: "Tare",
-            dataIndex: "tare",
-            key: "tare",
-            render: (text) => text,
-        },
-        {
-            title: "Nett",
-            dataIndex: "nett",
-            key: "nett",
-            render: (text) => text,
+            title: "Tanggal Keluar",
+            dataIndex: "waktu_keluar",
+            key: "waktu_keluar",
+            render: (text) => dayjs(text).format("DD/MM/YY HH:ss"),
         },
     ];
 
