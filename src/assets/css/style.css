@@ -1,76 +1,76 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-*{
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
-.ant-menu-item{
-    /* display: flex !important;
+
+.ant-menu-item {
+  /* display: flex !important;
     justify-items: center !important; */
-    padding-left: 24px !important;
+  padding-left: 24px !important;
 }
 
-p{
-    margin-bottom: 0;
+p {
+  margin-bottom: 0;
 }
 
-.ant-modal.modal-sider  {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-
+.ant-modal.modal-sider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
 }
 
-.ant-modal.modal-sider .ant-modal-content{
-    padding: 0;
-    width: fit-content !important;
-
+.ant-modal.modal-sider .ant-modal-content {
+  padding: 0;
+  width: fit-content !important;
 }
 
-.ant-modal.modal-sider .ant-modal-content .ant-modal-body{
-    width: fit-content !important;
+.ant-modal.modal-sider .ant-modal-content .ant-modal-body {
+  width: fit-content !important;
 }
 
-.text-sub-title{
-    color: rgb(157, 157, 157) !important; 
+.text-sub-title {
+  color: rgb(157, 157, 157) !important;
 }
 
 .custom-scrollbar {
-    height: 150px;
-    overflow-y: scroll;
-    scrollbar-width: thin; /* Hide default scrollbar */
-    scrollbar-color: #2f4f4f #fff; /* Change scrollbar color */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: #fff; /* Change track color */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #2f4f4f; /* Change thumb color */
-    border-radius: 10px; /* Add rounded corners to thumb */
-  }
-
-.ant-btn {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-  }
-
-  .ant-btn span {
-    margin-left: 4px;
-  }
-
-  .main-card{
-    box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.36);
-        -webkit-box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.36);
-        -moz-box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.36);
-  }
-
-.table-in-page .ant-table-cell{
-    padding: 8px 16px !important;
+  height: 150px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  /* Hide default scrollbar */
+  scrollbar-color: #2f4f4f #fff;
+  /* Change scrollbar color */
 }
 
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #fff;
+  /* Change track color */
+}
 
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #2f4f4f;
+  /* Change thumb color */
+  border-radius: 10px;
+  /* Add rounded corners to thumb */
+}
 
+.ant-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.ant-btn span {
+  margin-left: 4px;
+}
+
+.main-card {
+  box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.36);
+  -webkit-box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.36);
+  -moz-box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.36);
+}
+
+.table-in-page .ant-table-cell {
+  padding: 8px 16px !important;
+}

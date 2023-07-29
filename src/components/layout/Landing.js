@@ -4,17 +4,47 @@ import { FaReact } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "../../assets/css/landing.css";
 import { Container, Button } from "react-bootstrap";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import Login from "../../contents/auth/Login";
+import { Link, Navigate, useNavigate, NavLink } from "react-router-dom";
+
+import LOGOSection from "../../assets/img/download.png";
 
 const Nav = styled.nav`
-  background: #fff;
-  color: #333;
-  padding: 10px 20px;
+  background: white;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #f26722;
+  padding: 0.5rem calc((80vw - 1000px) / 2);
+  z-index: 10;
+  border-bottom: 4px solid #51a142;
+  p {
+    color: #51a142;
+  }
+`;
+
+const NavLinkStyle = styled(NavLink)`
+  color: #51a142;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  cursor: pointer;
+
+  &.active {
+    color: #f26722;
+  }
+
+  &:hover {
+    color: #f26722;
+    transition: 0.2s ease-in-out;
+  }
+`;
+
+const NavMenu = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: -10px;
 `;
 
 const Logo = styled.div`
@@ -23,30 +53,12 @@ const Logo = styled.div`
   align-items: center;
 
   img {
-    margin-right: 3px;
   }
 `;
 // border-style: solid;
 // border-color: #f26722;
+// #51a142
 // border-radius: 500px;
-const NavItems = styled.div`
-  a {
-    color: #333;
-    margin: 0 10px;
-    text-decoration: none;
-    text-transform: upercase;
-  }
-`;
-
-const HeroSection = styled(motion.section)`
-  height: 80vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #007bff;
-  color: #fff;
-  text-align: center;
-`;
 
 const Section = styled(motion.section)`
   height: 100vh;
@@ -54,7 +66,7 @@ const Section = styled(motion.section)`
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: #007bff;
+  background: transparent;
   color: #fff;
 `;
 
@@ -79,35 +91,32 @@ const FooterSection = styled.footer`
 
 const heroVariants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 3 } },
+  visible: { opacity: 3, transition: { duration: 5 } },
 };
 
-export default function Landing() {
+export default function Landing({ children, onClick, disabled }) {
   const navigate = useNavigate();
   return (
     <div>
-      {/* Landing Cocokologi
-      <button>Login #51a142</button>
-      <div>
-        <img src={Avatar} width={35} height={35} alt="" />
-      </div> */}
       <Nav>
-        <Logo>
-          <img src={Avatar} width={75} height={50} alt="" />
-          SGFM
-        </Logo>
-        <NavItems>
-          <a href="#about">About Us</a>
-          <a href="#services">Services</a>
-          <button
-            style={{ borderRadius: "25px" }}
-            className="btn btn-outline-primary px-5 mx-3"
-            onClick={() => navigate("/apps/login")}
-            outline="primary"
-          >
+        <NavLinkStyle to="/" exact>
+          <Logo>
+            <img src={Avatar} width={75} height={50} alt="" />
+          </Logo>
+          <p>SGFM</p>
+        </NavLinkStyle>
+        <NavMenu>
+          <NavLinkStyle to="/about" exact>
+            About
+          </NavLinkStyle>
+          <NavLinkStyle to="/services" exact>
+            Services
+          </NavLinkStyle>
+
+          <button class="cool-button" onClick={() => navigate("/apps/login")}>
             Login
           </button>
-        </NavItems>
+        </NavMenu>
       </Nav>
 
       <Section id="home">
@@ -117,22 +126,22 @@ export default function Landing() {
           initial="hidden"
           animate="visible"
         >
-          <h1>Welcome to Our Site</h1>
-          <p>Your success is our mission</p>
-          <Button variant="light">Learn More</Button>
+          <img src={LOGOSection} width={1000} height={350} alt="" />
+          {/* 
+          <Button variant="light"></Button>
+          <button class="cool-button" >
+            Learn More
+          </button> */}
         </Container>
       </Section>
-
       <AboutSection id="about">
-        <h2>About Us</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+        {/* <h2>About Us</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p> */}
       </AboutSection>
-
       <ServicesSection id="services">
-        <h2>Our Services</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+        {/* <h2>Our Services</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p> */}
       </ServicesSection>
-
       <FooterSection>
         <p>&copy; {new Date().getFullYear()} PT SGF Manufacturing.</p>
       </FooterSection>

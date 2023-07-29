@@ -8,6 +8,7 @@ import {
   Select,
   Tabs,
   Typography,
+  theme,
 } from "antd";
 import MainCard from "../../../../components/MainCard";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
@@ -18,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { PostAPI } from "../../../../redux";
 import dayjs from "dayjs";
 const { TextArea } = Input;
+const { useToken } = theme;
 
 const TabsContent = ({ type, state, setState }) => {
   return (
@@ -128,7 +130,7 @@ const TabsContent = ({ type, state, setState }) => {
           display: "flex",
           justifyContent: "end",
           gap: 8,
-          marginTop: 24,
+          marginTop: 8,
         }}
       >
         <Form.Item>
@@ -152,6 +154,7 @@ const defaultValue = {
 };
 
 export default function Home() {
+  const { token } = useToken();
   const dispatch = useDispatch();
   const formRef = useRef(null);
   const [state, setState] = useState(defaultValue);
@@ -212,7 +215,7 @@ export default function Home() {
         }}
         gutter={16}
       >
-        <Col lg={18} style={{ height: "inherit" }}>
+        <Col lg={16} style={{ height: "inherit" }}>
           <MainCard style={{ height: "100%" }}>
             <Form
               name="basic"
@@ -225,7 +228,7 @@ export default function Home() {
               autoComplete="off"
             >
               <Typography.Title level={4}>
-                Input Data Kendaraan Masuk & Keluar
+                Form Timbangan Kendaraan
               </Typography.Title>
               <Tabs
                 activeKey={tabValue}
@@ -239,41 +242,54 @@ export default function Home() {
             </Form>
           </MainCard>
         </Col>
-        <Col lg={6} style={{ height: "inherit" }}>
-          <Typography.Title level={5}>Aktifitas</Typography.Title>
+        <Col lg={8} style={{ height: "inherit" }}>
+          <Typography.Title level={5}>
+            Timbangan masuk baru-baru ini
+          </Typography.Title>
           <List
             itemLayout="vertical"
             dataSource={result?.data?.rows || []}
             renderItem={(item, index) => (
               <List.Item key={index}>
-                <List.Item.Meta title={item?.nomer_polisi} />
+                {/* <List.Item.Meta title={item?.nomer_polisi} /> */}
                 <div>
-                  <Typography>
-                    Gross: {item?.gross || 0} || Tare : {item?.tare || 0} ||
-                    Nett : {item?.nett || 0}
-                  </Typography>
-                  <Typography>
-                    {dayjs(
-                      tabValue === "kendaraan_masuk"
-                        ? item?.waktu_masuk
-                        : item?.waktu_keluar
-                    ).format("DD/MMM/YYYY HH:ss")}
-                  </Typography>
-                  <Button
-                    onClick={() => {
-                      setTabValue("kendaraan_keluar");
-                      const value = {
-                        nama_supir: item?.nama_supir,
-                        vendor_id: item?.vendor_id,
-                        produk_id: item?.produk_id,
-                        nomer_polisi: item?.nomer_polisi,
-                      };
-                      setState(value);
-                      formRef?.current?.setFieldsValue(value);
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
                     }}
                   >
-                    Select
-                  </Button>
+                    <Typography
+                      style={{
+                        fontWeight: "bold",
+                        color: token.colorPrimary,
+                      }}
+                    >
+                      {item?.nomer_polisi}
+                    </Typography>
+                    <Typography>
+                      {dayjs(item?.waktu_masuk).format("DD/MMM/YY HH:ss")}
+                    </Typography>
+                    <div style={{ textAlign: "right" }}>
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          setTabValue("kendaraan_keluar");
+                          const value = {
+                            nama_supir: item?.nama_supir,
+                            vendor_id: item?.vendor_id,
+                            produk_id: item?.produk_id,
+                            nomer_polisi: item?.nomer_polisi,
+                          };
+                          setState(value);
+                          formRef?.current?.setFieldsValue(value);
+                        }}
+                      >
+                        Select
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </List.Item>
             )}
