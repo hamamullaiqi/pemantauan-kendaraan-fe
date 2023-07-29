@@ -21,6 +21,7 @@ import {
 import { useDispatch } from "react-redux";
 import { PatchAPI, PostAPI } from "../../../redux";
 import { DestroyAPI } from "../../../redux/reducer/apiHandling";
+import MainTable from "./MainTable";
 
 const { Search } = Input;
 const PAGE = 1;
@@ -279,36 +280,25 @@ export default function TableMaster({
                             />
                         </div>
                     </div>
-                    <Table
-                        className="table-in-page"
-                        style={{
-                            minHeight: `calc(100vh - 300px)`,
-                            marginTop: 16,
-                        }}
+                    <MainTable
                         columns={newColumns}
                         dataSource={datas?.data?.rows}
-                        scroll={{ y: `calc(100vh - 354px)` }}
-                        pagination={false}
+                        paginationProp={{
+                            total: datas?.data?.count || 0,
+                            current: datas?.data?.page || page,
+                            pageSize: datas?.data?.perPage || perPage,
+                            showSizeChanger: true,
+                            onChange: (pg, perPg) => {
+                                console.log(perPg);
+                                if (pg) {
+                                    setPage(pg);
+                                }
+                                if (perPage) {
+                                    setPerPage(perPg);
+                                }
+                            },
+                        }}
                     />
-                    {!!datas && (
-                        <div style={{ textAlign: "right" }}>
-                            <Pagination
-                                total={datas?.data?.count || 0}
-                                current={datas?.data?.page || page}
-                                pageSize={datas?.data?.perPage || perPage}
-                                showSizeChanger
-                                onChange={(pg, perPg) => {
-                                    console.log(perPg);
-                                    if (pg) {
-                                        setPage(pg);
-                                    }
-                                    if (perPage) {
-                                        setPerPage(perPg);
-                                    }
-                                }}
-                            />
-                        </div>
-                    )}
                 </div>
             </MainCard>
             {!!openCreate && (
