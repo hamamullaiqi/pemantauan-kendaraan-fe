@@ -1,34 +1,25 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+.cool-button {
+  background-color: #f26722;
+  /* Warna latar belakang tombol */
+  color: white;
+  /* Warna teks tombol */
+  padding: 10px 20px;
+  /* Padding di dalam tombol */
+  margin: 10px 0;
+  /* Margin di luar tombol */
+  border: none;
+  /* Menghilangkan border tombol */
+  cursor: pointer;
+  /* Mengubah kursor menjadi pointer ketika mouse diarahkan ke tombol */
+  width: 100%;
+  /* Lebar tombol */
+  opacity: 0.9;
+  /* Opacity tombol */
+  font-size: 16px;
+  /* Ukuran font teks tombol */
+  border-radius: 25px;
 }
 
-.landing-page {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-h1 {
-  color: #007bff;
-}
-
-h2 {
-  color: #333;
-}
-
-footer {
-  margin-top: 30px;
-  text-align: center;
-  color: #888;
-}
-
-footer p {
-  margin: 5px 0;
+.cool-button:hover {
+  opacity: 1;
 }
