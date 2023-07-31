@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { HiOutlineFilter } from "react-icons/hi";
 import { IoMdAdd, IoMdRefresh } from "react-icons/io";
 import { BiExport } from "react-icons/bi";
@@ -22,9 +22,10 @@ import {
     Col,
 } from "antd";
 import { useDispatch } from "react-redux";
-import { PatchAPI, PostAPI } from "../../../redux";
+import { GetAPI, PatchAPI, PostAPI } from "../../../redux";
 import { DestroyAPI } from "../../../redux/reducer/apiHandling";
 import MainTable from "./MainTable";
+import { useReactToPrint } from "react-to-print";
 
 const { Search } = Input;
 const { RangePicker } = DatePicker;
@@ -112,7 +113,7 @@ const ExportDialog = ({ isModalOpen, handleCancel, onFinish, form, state }) => {
             title={
                 <Fragment>
                     <Typography style={{ fontSize: "1.4rem" }}>
-                        To Export Document
+                        Export To Document
                     </Typography>
                     <Divider />
                 </Fragment>
@@ -142,7 +143,8 @@ const ExportDialog = ({ isModalOpen, handleCancel, onFinish, form, state }) => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Nama Tidak Boleh Kosong!",
+                                    message:
+                                        "Document Type Tidak Boleh Kosong!",
                                 },
                             ]}
                         >
@@ -156,7 +158,7 @@ const ExportDialog = ({ isModalOpen, handleCancel, onFinish, form, state }) => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Nama Tidak Boleh Kosong!",
+                                    message: "Date Tidak Boleh Kosong!",
                                 },
                             ]}
                         >
@@ -332,6 +334,31 @@ export default function TableMaster({
         console.warn("if edited content you mush add renderCreate.form props");
     }
 
+    const pdfRef = useRef(null);
+    const [dtPdf, setDtPdf] = useState(null);
+
+    const handlePDF = useReactToPrint({
+        content: () => pdfRef.current,
+    });
+
+    const handleSubmitExport = async (value) => {
+        const result = await dispatch(
+            GetAPI({
+                url: `${renderExport.url}?filters=${JSON.stringify(value)}`,
+            })
+        );
+        if (!!result?.payload) {
+            setDtPdf(result?.payload?.data?.data?.rows);
+        }
+    };
+    console.log(dtPdf);
+
+    useEffect(() => {
+        if (!!dtPdf) {
+            handlePDF();
+        }
+    }, [dtPdf]);
+
     return (
         <div>
             <div
@@ -441,6 +468,12 @@ export default function TableMaster({
                     />
                 </div>
             </MainCard>
+            {!!dtPdf && (
+                <div ref={pdfRef} style={{ display: "none" }}>
+                    {!!renderExport?.componentPDF &&
+                        renderExport?.componentPDF(dtPdf)}
+                </div>
+            )}
             {!!openCreate && (
                 <CreateForm
                     isModalOpen={openCreate}
@@ -467,7 +500,7 @@ export default function TableMaster({
                     handleOk={() => setOpenExport(!openExport)}
                     form={renderExport?.form}
                     state={renderExport?.state}
-                    onFinish={renderExport?.onSubmit}
+                    onFinish={handleSubmitExport}
                 />
             )}
         </div>
