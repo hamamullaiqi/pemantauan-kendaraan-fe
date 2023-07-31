@@ -336,12 +336,20 @@ export default function TableMaster({
 
     const pdfRef = useRef(null);
     const [dtPdf, setDtPdf] = useState(null);
-
+    const pageStyle = `
+  @page {
+    size: A4 landscape;
+  }
+`;
     const handlePDF = useReactToPrint({
         content: () => pdfRef.current,
+        pageStyle,
     });
 
+    const [newState, setNewState] = useState(null);
+
     const handleSubmitExport = async (value) => {
+        setNewState(value);
         const result = await dispatch(
             GetAPI({
                 url: `${renderExport.url}?filters=${JSON.stringify(value)}`,
@@ -358,6 +366,9 @@ export default function TableMaster({
             handlePDF();
         }
     }, [dtPdf]);
+
+    const Component =
+        !!renderExport?.ExportPDFComp && renderExport?.ExportPDFComp;
 
     return (
         <div>
@@ -469,9 +480,14 @@ export default function TableMaster({
                 </div>
             </MainCard>
             {!!dtPdf && (
-                <div ref={pdfRef} style={{ display: "none" }}>
-                    {!!renderExport?.componentPDF &&
-                        renderExport?.componentPDF(dtPdf)}
+                <div style={{ display: "none" }}>
+                    <div ref={pdfRef}>
+                        <Component
+                            data={dtPdf}
+                            title={renderExport?.title}
+                            state={newState}
+                        />
+                    </div>
                 </div>
             )}
             {!!openCreate && (
