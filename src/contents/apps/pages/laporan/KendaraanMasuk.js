@@ -13,6 +13,8 @@ import {
     Text,
     View,
 } from "@react-pdf/renderer";
+import PrintPDF from "./ExportPDF";
+import { FaRegFilePdf } from "react-icons/fa";
 const { TextArea } = Input;
 
 const defaultValue = {
@@ -94,12 +96,6 @@ export default function KendaraanKeluar() {
             key: "keterangan",
             render: (text) => text,
         },
-        {
-            title: "Tanggal Masuk",
-            dataIndex: "waktu_masuk",
-            key: "waktu_masuk",
-            render: (text) => dayjs(text).format("DD/MM/YY HH:ss"),
-        },
     ];
 
     const [state, setState] = useState(defaultValue);
@@ -111,8 +107,10 @@ export default function KendaraanKeluar() {
             report
             columns={columns}
             renderExport={{
-                url: "",
+                ExportPDFComp: PrintPDF,
+                url: `api/v1/kendaraan_masuk/paging`,
                 state: exportState,
+                title: "Laporan Kendaraan Masuk",
                 form: () => <Fragment></Fragment>,
             }}
         />
