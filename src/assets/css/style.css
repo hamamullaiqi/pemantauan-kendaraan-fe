@@ -75,4 +75,9 @@ p {
   padding: 8px 16px !important;
 }
 
+/* -- DASHBOARD -- */
 
+.logut p {
+  padding: 70px 0;
+  color: red;
+}

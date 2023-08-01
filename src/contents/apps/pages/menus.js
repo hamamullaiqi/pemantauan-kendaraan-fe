@@ -15,8 +15,19 @@ const Menus = [
     icon: <HiHome size={SIZE} />,
     level: 0x1fff,
     role: ["ADM"],
-    label: <Link to={"/apps/home"}>Home</Link>,
+
+    children: [
+      {
+        key: "/apps/home/kendaraan",
+        icon: <GoDotFill size={SIZE} />,
+        level: 0x1ff0,
+        label: <Link to={"/apps/home"}>Input Kendaraan</Link>,
+        role: ["ADM"],
+      },
+    ],
+    label: <Link to={"#"}>Home</Link>,
   },
+
   {
     key: "/apps/master",
     icon: <HiClipboardList size={SIZE} />,

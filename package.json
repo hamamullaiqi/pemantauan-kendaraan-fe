@@ -39,6 +39,7 @@
     "redux-thunk": "^2.4.2",
     "simplebar-react": "^3.2.1",
     "styled-components": "^6.0.5",
+    "sweetalert2": "^11.7.20",
     "swr": "^2.2.0",
     "timeseries-analysis": "^1.0.12",
     "web-vitals": "^2.1.0"

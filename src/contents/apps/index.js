@@ -33,7 +33,7 @@ const UserPage = ({ userdata, theme }) => {
         path="login"
         element={
           !!userdata ? (
-            <Navigate replace to="../home" />
+            <Navigate replace to="../profile" />
           ) : (
             <LoginPage apps="Dashboard" theme={theme} />
           )
@@ -46,7 +46,7 @@ const UserPage = ({ userdata, theme }) => {
           !!userdata ? (
             <DashboardPages theme={theme} idx={new Date().getTime()} />
           ) : (
-            <Navigate replace to="../login" />
+            <Navigate replace to="../profile" />
           )
         }
       />

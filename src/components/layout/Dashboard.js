@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
-import { HiMoon, HiOutlineSun } from "react-icons/hi";
+import { HiMoon, HiOutlineSun, HiOutlineLogout } from "react-icons/hi";
 import { grey } from "@ant-design/colors";
 import { Avatar, Button, ConfigProvider, Layout, Switch, theme } from "antd";
 import { useTheme } from "../../hook/useTheme";
@@ -15,6 +15,8 @@ import SimpleBar from "simplebar-react";
 import { useDispatch } from "react-redux";
 import { setTheme } from "../../redux/reducer/apps";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../redux/reducer/auth";
+import "../../assets/css/style.css";
 const { Header, Content, Footer } = Layout;
 
 const useStyle = createUseStyles({
@@ -112,6 +114,9 @@ export default function Dashboard({ children, menus, themes }) {
     isDark,
   });
 
+  const logOut = useCallback(() => {
+    dispatch(logout(navigate("/landing")));
+  }, [dispatch]);
   return (
     <Layout
       className={classes.layout}
@@ -191,6 +196,9 @@ export default function Dashboard({ children, menus, themes }) {
               style={{ backgroundColor: colorPrimary }}
               onClick={() => navigate("/apps/profile")}
             />
+            <Button className="logut">
+              <HiOutlineLogout onClick={logOut} size={21} color={grey[4]} />
+            </Button>
           </div>
         </Header>
         {/* <Scrollbars> */}

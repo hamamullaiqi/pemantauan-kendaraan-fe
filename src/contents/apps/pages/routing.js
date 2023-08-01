@@ -49,7 +49,7 @@ export const Routing = [
     to: "/master/users",
     level: 0x1ff0,
     component: <User />,
-    role: ["ADM"],
+    role: ["MNG"],
   },
   {
     to: "/master/users",

@@ -60,104 +60,104 @@ import fetcher from "../../../../helper/fetcher";
 // };
 
 const ExportPDF = ({ data, title, state }) => {
-    const columns = [
-        {
-            title: "No",
-            dataIndex: "_id",
-            key: "_id",
-            render: (text, _, idx) => idx + 1,
-        },
-        {
-            title: "Tanggal ",
-            dataIndex: "createdAt",
-            key: "createdAt",
-            render: (text) => dayjs(text).format("DD/MM/YY HH:ss"),
-        },
-        {
-            title: "No Polisi",
-            dataIndex: "nomer_polisi",
-            key: "nomer_polisi",
-            render: (text) => text,
-        },
-        {
-            title: "Nama Supir",
-            dataIndex: "nama_supir",
-            key: "nama_supir",
-            render: (text) => text,
-        },
-        {
-            title: "Produk",
-            dataIndex: "produkMasuk",
-            key: "produkKeluar",
-            render: (row) => row?.nama || "",
-        },
-        {
-            title: "Vendor",
-            dataIndex: "vendorMasuk",
-            key: "vendorKeluar",
-            render: (row) => row?.nama || "",
-        },
+  const columns = [
+    {
+      title: "No",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text, _, idx) => idx + 1,
+    },
+    {
+      title: "Tanggal ",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => dayjs(text).format("DD/MM/YY HH:ss"),
+    },
+    {
+      title: "No Polisi",
+      dataIndex: "nomer_polisi",
+      key: "nomer_polisi",
+      render: (text) => text,
+    },
+    {
+      title: "Nama Supir",
+      dataIndex: "nama_supir",
+      key: "nama_supir",
+      render: (text) => text,
+    },
+    {
+      title: "Produk",
+      dataIndex: "produkMasuk",
+      key: "produkKeluar",
+      render: (row) => row?.nama || "",
+    },
+    {
+      title: "Vendor",
+      dataIndex: "vendorMasuk",
+      key: "vendorKeluar",
+      render: (row) => row?.nama || "",
+    },
 
-        {
-            title: "Gross",
-            dataIndex: "gross",
-            key: "gross",
-            align: "right",
+    {
+      title: "Gross",
+      dataIndex: "gross",
+      key: "gross",
+      align: "right",
 
-            render: (text) => text,
-        },
-        {
-            title: "Tare",
-            dataIndex: "tare",
-            key: "tare",
-            align: "right",
+      render: (text) => text,
+    },
+    {
+      title: "Tare",
+      dataIndex: "tare",
+      key: "tare",
+      align: "right",
 
-            render: (text) => text,
-        },
-        {
-            title: "Nett",
-            dataIndex: "nett",
-            key: "nett",
-            align: "right",
+      render: (text) => text,
+    },
+    {
+      title: "Nett",
+      dataIndex: "nett",
+      key: "nett",
+      align: "right",
 
-            render: (text) => text,
-        },
-        {
-            title: "Keterangan",
-            dataIndex: "keterangan",
-            key: "keterangan",
-            render: (text) => text,
-        },
-    ];
-    console.log(state, data);
-    const [startDate, endDate] = useMemo(() => {
-        return state?.date;
-    }, [state]);
-    return (
-        <div style={{ padding: 8 }}>
-            <Typography
-                style={{
-                    fontSize: 18,
-                    textAlign: "center",
-                    fontWeight: "bold",
-                }}
-            >
-                {title || "No Title"}
-            </Typography>
-            <Typography
-                style={{
-                    fontSize: 14,
-                    textAlign: "center",
-                }}
-            >
-                Tanggal {dayjs(startDate).format("DD/MMM/YYYY")} -
-                {dayjs(endDate).format("DD/MMM/YYYY")}
-            </Typography>
-            <div style={{ marginTop: 32 }}>
-                <Table dataSource={data} columns={columns} pagination={false} />
-            </div>
-        </div>
-    );
+      render: (text) => text,
+    },
+    {
+      title: "Keterangan",
+      dataIndex: "keterangan",
+      key: "keterangan",
+      render: (text) => text,
+    },
+  ];
+  console.log(state, data);
+  const [startDate, endDate] = useMemo(() => {
+    return state?.date;
+  }, [state]);
+  return (
+    <div style={{ padding: 8 }}>
+      <Typography
+        style={{
+          fontSize: 18,
+          textAlign: "center",
+          fontWeight: "bold",
+        }}
+      >
+        {title || "No Title"}
+      </Typography>
+      <Typography
+        style={{
+          fontSize: 14,
+          textAlign: "center",
+        }}
+      >
+        Tanggal {dayjs(startDate).format("DD/MMM/YYYY")} -
+        {dayjs(endDate).format("DD/MMM/YYYY")}
+      </Typography>
+      <div style={{ marginTop: 32 }}>
+        <Table dataSource={data} columns={columns} pagination={false} />
+      </div>
+    </div>
+  );
 };
 
 export default ExportPDF;
