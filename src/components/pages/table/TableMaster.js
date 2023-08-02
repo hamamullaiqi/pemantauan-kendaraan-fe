@@ -344,6 +344,7 @@ export default function TableMaster({
     const handlePDF = useReactToPrint({
         content: () => pdfRef.current,
         pageStyle,
+        documentTitle: `${renderExport?.title}-${dayjs().unix()}`,
     });
 
     const [newState, setNewState] = useState(null);
