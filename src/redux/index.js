@@ -11,6 +11,7 @@ export const {
     logout,
     setApps,
     successLogin,
+    forgotPassword,
 } = Auth;
 export const {
     loadAirlines,

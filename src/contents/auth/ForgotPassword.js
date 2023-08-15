@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { useTheme } from "../../hook/useTheme";
 import { login } from "../../redux/reducer/auth";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { PostAPI, forgotPassword } from "../../redux";
 
 // import { CreateRandomString } from '../../login/utils';
 
@@ -37,22 +38,19 @@ const useStyle = createUseStyles({
     },
 });
 
-export default function Login({ apps, theme }) {
+export default function ForgotPassword() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [image, setImage] = useState("");
     const {
         token: { colorPrimary: BaseColorPrimary },
     } = themeBase.useToken();
-    const { colorPrimary } = theme || { colorPrimary: "" };
 
-    const currentColorPrimary = !!colorPrimary
-        ? colorPrimary
-        : BaseColorPrimary;
+    const currentColorPrimary = BaseColorPrimary;
     const classes = useStyle({ currentColorPrimary });
 
     const onFinished = useCallback((values) => {
-        dispatch(login({ ...values, app: apps }));
+        dispatch(forgotPassword(values));
     }, []);
     return (
         <div className={classes.root}>
@@ -62,11 +60,8 @@ export default function Login({ apps, theme }) {
                         style={{ color: currentColorPrimary }}
                         level={2}
                     >
-                        Login
+                        Forgot Password
                     </Typography.Title>
-                    <Typography.Text className="text-sub-title">
-                        Sign in to {apps}
-                    </Typography.Text>
                 </div>
                 <Divider className="my-3" />
                 <div>
@@ -82,34 +77,19 @@ export default function Login({ apps, theme }) {
                         }}
                     >
                         <Form.Item
-                            name={"user"}
+                            name={"email"}
                             rules={[
                                 {
                                     required: true,
-                                    message: "Username Required",
+                                    message: "Email Required",
                                 },
                             ]}
                         >
                             <Input
                                 autoFocus
                                 size="large"
-                                placeholder="Username"
+                                placeholder="Email"
                                 prefix={<RiUser3Line color={grey[2]} />}
-                            />
-                        </Form.Item>
-                        <Form.Item
-                            name={"password"}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Password Required",
-                                },
-                            ]}
-                        >
-                            <Input.Password
-                                size="large"
-                                placeholder="Password"
-                                prefix={<RiLockLine color={grey[2]} />}
                             />
                         </Form.Item>
 
@@ -131,16 +111,8 @@ export default function Login({ apps, theme }) {
                             type="primary"
                             htmlType="submit"
                         >
-                            Login
+                            Reset Password
                         </Button>
-                        <div style={{ textAlign: "center" }}>
-                            <Button
-                                onClick={() => navigate("/forgot-password")}
-                                type="link"
-                            >
-                                Forgot Password?
-                            </Button>
-                        </div>
                     </Form>
                 </div>
             </div>

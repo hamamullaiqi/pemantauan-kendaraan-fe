@@ -53,8 +53,6 @@ export const login = createAsyncThunk(
             { username: user, password, app, ...rest },
             defConfig
         );
-
-        console.log(token);
         if (!!token?.data) {
             const userdata = jwtDecode(token.data?.token);
             console.log(userdata);
@@ -69,6 +67,22 @@ export const login = createAsyncThunk(
         }
     }
 );
+
+export const forgotPassword = createAsyncThunk(
+    "auth/forgot-password",
+    async ({ email }, thunkAPI) => {
+        const { dispatch, getState } = thunkAPI;
+        const {
+            auth: { apps },
+        } = getState();
+        await Axios.post(
+            `${process.env.REACT_APP_SERVICEAPI}auth/forgot-password`,
+            { email },
+            defConfig
+        );
+    }
+);
+
 export const logout = createAsyncThunk(
     "auth/logout",
     async (body, thunkAPI) => {
@@ -99,8 +113,11 @@ export const initMe = createAsyncThunk("auth/me", async (body, thunkAPI) => {
         dispatch(
             GetAPI({ url: `${process.env.REACT_APP_SERVICEAPI}auth/isMe` })
         );
-        if (userdata)
+        if (userdata) {
             dispatch(successLogin({ userdata: userdata?.dataValues, token }));
+        } else {
+            dispatch(doLogout());
+        }
     }
     dispatch(initComplete());
 });
