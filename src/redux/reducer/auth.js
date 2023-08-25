@@ -43,27 +43,31 @@ const defConfig = {
 export const login = createAsyncThunk(
     "auth/login",
     async ({ user, password, app, ...rest }, thunkAPI) => {
-        const { dispatch, getState } = thunkAPI;
-        const {
-            auth: { apps },
-        } = getState();
-        const tokenName = `token`;
-        const token = await Axios.post(
-            `${process.env.REACT_APP_SERVICEAPI}auth/login`,
-            { username: user, password, app, ...rest },
-            defConfig
-        );
-        if (!!token?.data) {
-            const userdata = jwtDecode(token.data?.token);
-            console.log(userdata);
-            window.localStorage.setItem("token", token.data?.token);
-            dispatch(
-                successLogin({
-                    userdata: userdata.dataValues,
-                    token: token?.data?.token,
-                })
+        try {
+            const { dispatch, getState } = thunkAPI;
+            const {
+                auth: { apps },
+            } = getState();
+            const tokenName = `token`;
+            const token = await Axios.post(
+                `${process.env.REACT_APP_SERVICEAPI}auth/login`,
+                { username: user, password, app, ...rest },
+                defConfig
             );
-            toast.success(`Welcome to ${Title}, ${userdata?.name}`);
+            if (!!token?.data) {
+                const userdata = jwtDecode(token.data?.token);
+                window.localStorage.setItem("token", token.data?.token);
+                dispatch(
+                    successLogin({
+                        userdata: userdata.dataValues,
+                        token: token?.data?.token,
+                    })
+                );
+                toast.success(`Welcome to Apps, ${userdata?.name}`);
+            }
+        } catch (error) {
+            console.log(error);
+            return error;
         }
     }
 );

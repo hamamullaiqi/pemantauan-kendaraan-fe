@@ -7,6 +7,7 @@ import {
     theme as themeBase,
     Input,
     Typography,
+    Alert,
 } from "antd";
 import React from "react";
 import { useState } from "react";
@@ -50,10 +51,15 @@ export default function Login({ apps, theme }) {
         ? colorPrimary
         : BaseColorPrimary;
     const classes = useStyle({ currentColorPrimary });
+    const [message, setMessage] = useState("");
 
-    const onFinished = useCallback((values) => {
-        dispatch(login({ ...values, app: apps }));
-    }, []);
+    const onFinished = async (values) => {
+        const { payload } = await dispatch(login({ ...values, app: apps }));
+
+        if (payload?.response?.status !== 200) {
+            setMessage(payload?.response?.data?.message);
+        }
+    };
     return (
         <div className={classes.root}>
             <div className={classes.wrapLogin}>
@@ -68,7 +74,15 @@ export default function Login({ apps, theme }) {
                         Sign in to {apps}
                     </Typography.Text>
                 </div>
-                <Divider className="my-3" />
+                <Divider style={{ margin: "4px 0px" }} />
+                {!!message && (
+                    <Alert
+                        type="error"
+                        style={{ margin: "8px 0px" }}
+                        message={message}
+                        banner
+                    />
+                )}
                 <div>
                     <Form
                         layout="horizontal"
