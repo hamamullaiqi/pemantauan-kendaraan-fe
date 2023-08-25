@@ -20,6 +20,7 @@ import { PostAPI } from "../../../../redux";
 import dayjs from "dayjs";
 const { TextArea } = Input;
 const { useToken } = theme;
+const { Search } = Input;
 
 const TabsContent = ({ type, state, setState }) => {
     return (
@@ -162,8 +163,11 @@ export default function Home() {
     const [state, setState] = useState(defaultValue);
     const [tabValue, setTabValue] = useState("kendaraan_masuk");
     const [timestamp, setTimestamp] = useState(dayjs().unix());
+    const [search, setSearch] = useState("");
 
-    console.log(state, formRef);
+    const onSearch = (value) => {
+        setSearch(value);
+    };
 
     const uri = useMemo(() => {
         return tabValue === "kendaraan_masuk"
@@ -172,10 +176,8 @@ export default function Home() {
     }, [tabValue]);
 
     const uriAktifitas = useMemo(() => {
-        return tabValue === "kendaraan_masuk"
-            ? `api/v1/kendaraan_masuk/paging?page=1&perPage=5&timestamp=${timestamp}`
-            : `api/v1/kendaraan_masuk/paging?page=1&perPage=5&timestamp=${timestamp}`;
-    }, [tabValue, timestamp]);
+        return `api/v1/kendaraan_masuk/paging?page=1&perPage=5&search=${search}&timestamp=${timestamp}`;
+    }, [tabValue, timestamp, search]);
 
     const { data: result } = useSWR(uriAktifitas, fetcher);
 
@@ -258,6 +260,13 @@ export default function Home() {
                     <Typography.Title level={5}>
                         Aktfitas Kendaraan baru-baru ini
                     </Typography.Title>
+                    <Search
+                        placeholder="search.."
+                        onSearch={onSearch}
+                        enterButton
+                        style={{ width: "100%" }}
+                        allowClear
+                    />
                     <List
                         itemLayout="vertical"
                         dataSource={result?.data?.rows || []}

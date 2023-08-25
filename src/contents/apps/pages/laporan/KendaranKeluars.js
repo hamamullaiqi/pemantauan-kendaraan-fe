@@ -85,6 +85,12 @@ export default function KendaraanKeluar() {
             key: "keterangan",
             render: (text) => text,
         },
+        {
+            title: "Nama Petugas",
+            dataIndex: "petugasKeluar",
+            key: "petugasKeluar",
+            render: (row) => row?.full_name || "-",
+        },
     ];
 
     const [state, setState] = useState(defaultValue);

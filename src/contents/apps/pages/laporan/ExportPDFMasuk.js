@@ -128,6 +128,12 @@ const ExportPDFMasuk = ({ data, title, state }) => {
             key: "keterangan",
             render: (text) => text,
         },
+        {
+            title: "Nama Petugas",
+            dataIndex: "petugasMasuk",
+            key: "petugasMasuk",
+            render: (row) => row?.full_name || "-",
+        },
     ];
     console.log(state, data);
     const [startDate, endDate] = useMemo(() => {

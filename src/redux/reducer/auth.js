@@ -63,7 +63,12 @@ export const login = createAsyncThunk(
                         token: token?.data?.token,
                     })
                 );
-                toast.success(`Welcome to Apps, ${userdata?.name}`);
+                toast.success(
+                    `Welcome to Apps, ${
+                        userdata?.dataValues?.username || "user"
+                    } `
+                );
+                return token;
             }
         } catch (error) {
             console.log(error);

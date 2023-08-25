@@ -55,10 +55,12 @@ export default function Login({ apps, theme }) {
 
     const onFinished = async (values) => {
         const { payload } = await dispatch(login({ ...values, app: apps }));
-
-        if (payload?.response?.status !== 200) {
+        if (!!payload?.response?.status && payload?.response?.status !== 200) {
             setMessage(payload?.response?.data?.message);
+            return;
         }
+
+        navigate("/apps/home");
     };
     return (
         <div className={classes.root}>
