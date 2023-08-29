@@ -43,7 +43,7 @@ export default ({ theme, idx }) => {
 
     return (
         <Fragment>
-            <Dashboard menus={Menus} themes={theme}>
+            <Dashboard menus={Menus} themes={theme} title="PT SGF">
                 <TheRouter />
             </Dashboard>
         </Fragment>
