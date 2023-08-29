@@ -15,14 +15,28 @@ import { ConfigProvider } from "antd";
 import { useLocalTheme } from "./localHook/useLocalTheme";
 import { setTheme } from "../../redux/reducer/apps";
 
+const defaultNavigateUser = (role) => {
+    console.log(role);
+    switch (role) {
+        case "MNG":
+            return <Navigate replace to="laporan/kendaraan-masuk" />;
+        case "ADM":
+            return <Navigate replace to="home" />;
+
+        default:
+            return;
+    }
+};
+
 const UserPage = ({ userdata, theme }) => {
+    console.log(userdata);
     return (
         <Routes>
             <Route
                 path=""
                 element={
                     !!userdata ? (
-                        <Navigate replace to="home" />
+                        defaultNavigateUser(userdata?.role)
                     ) : (
                         <Navigate replace to="login" />
                     )
@@ -33,7 +47,7 @@ const UserPage = ({ userdata, theme }) => {
                 path="login"
                 element={
                     !!userdata ? (
-                        <Navigate replace to="/apps/home" />
+                        defaultNavigateUser(userdata?.role)
                     ) : (
                         <LoginPage apps="Dashboard" theme={theme} />
                     )

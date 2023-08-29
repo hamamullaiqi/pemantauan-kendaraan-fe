@@ -60,7 +60,7 @@ export default function Login({ apps, theme }) {
             return;
         }
 
-        navigate("/apps/home");
+        navigate("/apps/");
     };
     return (
         <div className={classes.root}>
