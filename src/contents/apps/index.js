@@ -33,7 +33,7 @@ const UserPage = ({ userdata, theme }) => {
                 path="login"
                 element={
                     !!userdata ? (
-                        <Navigate replace to="/" />
+                        <Navigate replace to="/apps/home" />
                     ) : (
                         <LoginPage apps="Dashboard" theme={theme} />
                     )
