@@ -85,13 +85,17 @@ export default function User() {
                                 <Form.Item
                                     label="Password"
                                     name="password"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                "Password Tidak Boleh Kosong!",
-                                        },
-                                    ]}
+                                    rules={
+                                        !!edited
+                                            ? false
+                                            : [
+                                                  {
+                                                      required: true,
+                                                      message:
+                                                          "Password Tidak Boleh Kosong!",
+                                                  },
+                                              ]
+                                    }
                                 >
                                     <Input.Password />
                                 </Form.Item>
