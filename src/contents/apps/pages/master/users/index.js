@@ -59,10 +59,8 @@ export default function User() {
             editable={{ url: "api/v1/user/edit" }}
             deletable={{ url: "api/v1/user/delete" }}
             renderCreate={{
-                // contentType: "multipart/form-data",
                 state: state,
                 url: "api/v1/user/add",
-                // onSubmit: (row) => console.log(row),
                 form: ({ edited }) => (
                     <div>
                         <Row gutter={32}>
