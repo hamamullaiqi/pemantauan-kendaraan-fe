@@ -149,14 +149,14 @@ export default function Login({ apps, theme }) {
                         >
                             Login
                         </Button>
-                        {/* <div style={{ textAlign: "center" }}>
+                        <div style={{ textAlign: "center" }}>
                             <Button
                                 onClick={() => navigate("/forgot-password")}
                                 type="link"
                             >
                                 Forgot Password?
                             </Button>
-                        </div> */}
+                        </div>
                     </Form>
                 </div>
             </div>
