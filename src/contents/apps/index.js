@@ -21,7 +21,7 @@ const defaultNavigateUser = (role) => {
         case "MNG":
             return <Navigate replace to="laporan/kendaraan-masuk" />;
         case "ADM":
-            return <Navigate replace to="home" />;
+            return <Navigate replace to="/apps/home" />;
 
         default:
             return;
@@ -38,7 +38,7 @@ const UserPage = ({ userdata, theme }) => {
                     !!userdata ? (
                         defaultNavigateUser(userdata?.role)
                     ) : (
-                        <Navigate replace to="login" />
+                        <Navigate replace to="/apps/home/login" />
                     )
                 }
             />
